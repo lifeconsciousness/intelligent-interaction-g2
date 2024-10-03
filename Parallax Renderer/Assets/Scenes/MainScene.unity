@@ -690,8 +690,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76b924ba6c77d40a0bbe42ae6e006c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: 0.5
-  socketPort: 2000
+  parallaxFactor: 0.01
+  _port: 2000
 --- !u!1 &1369560636
 GameObject:
   m_ObjectHideFlags: 0

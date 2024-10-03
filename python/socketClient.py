@@ -1,27 +1,36 @@
-import socket
+import zmq
 from eyetracking import EyeTracking
 import threading
 import time
 
 def main():
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect(('localhost', 2000))
+    context = zmq.Context()
+    socket = context.socket(zmq.PUSH)
+    socket.connect('tcp://localhost:2000')
 
     eye_tracking = EyeTracking()
     tracking_thread = threading.Thread(target=eye_tracking.eye_tracking)
     tracking_thread.start()
 
+    old_values = (0, 0, 0)
+
     try:
         while not eye_tracking.stop_event.is_set():
             x, y, distance = eye_tracking.getPosition()
-            print(x, y, distance)
-            s.sendall(f'{x} {y} {distance}'.encode())
-            time.sleep(0.1) 
+            if old_values == (x, y, distance):
+                continue
+            old_values = (x, y, distance)
+            #print(x, y, distance)
+            socket.send_string(f'{x},{y},{distance}')
+            #time.sleep(0.1)
     except KeyboardInterrupt:
         eye_tracking.stop()
+    except Exception as e:
+        print(e)
+        exit()
     finally:
         tracking_thread.join()
-        s.close()
+        context.term()
 
 if __name__ == "__main__":
     main()

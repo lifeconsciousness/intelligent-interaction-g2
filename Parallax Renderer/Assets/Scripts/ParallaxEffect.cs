@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Required for UI components
-using UnityEngine.XR;
 using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading;
-using System.Text;
+using NetMQ;
+using NetMQ.Sockets;
+using System.Collections;
+using UnityEngine.Assertions;
 
 public class ParallaxEffect : MonoBehaviour
 {
@@ -17,10 +13,8 @@ public class ParallaxEffect : MonoBehaviour
     private Vector3 initialMainCameraPos;
     private Vector3 initialParallaxCameraPos;
     private Vector3 lastPosition;
-    private TcpListener listener;
-    private bool isRunning = false;
-
-    public int socketPort = 2000;
+    private volatile bool isRunning = false;
+    public int _port = 2000;
 
     void Start()
     {
@@ -32,29 +26,42 @@ public class ParallaxEffect : MonoBehaviour
             return;
         }
 
-        StartServer();
         initialMainCameraPos = new Vector3(0, 0, 0);
         initialParallaxCameraPos = parallaxCamera.transform.position;
+
+        AsyncIO.ForceDotNet.Force();
+        NetMQConfig.Linger = new TimeSpan(0, 0, 1);
+
+        _server = new PullSocket();
+        _server.Options.Linger = new TimeSpan(0, 0, 1);
+        _server.Bind($"tcp://*:{_port}");
+        print($"server on {_port}");
+
+        Assert.IsNotNull(_server);
+
+        StartCoroutine(_CoWorker());
     }
 
-    private void StartServer()
+    public PullSocket _server;
+    void OnDisable()
     {
-        listener = new TcpListener(IPAddress.Parse("127.0.0.1"), socketPort);
-        listener.Start();
-        isRunning = true;
-
-        Thread serverThread = new Thread(ListenForClients);
-        serverThread.Start();
+        _server?.Dispose();
+        NetMQConfig.Cleanup(false);
     }
 
-
-    private void ListenForClients()
+    IEnumerator _CoWorker()
     {
-        while (isRunning)
+        while (true)
         {
-            TcpClient client = listener.AcceptTcpClient();
-            // Pass the client to the handler method
-            HandleClientComm(client);
+            // Try receiving with a timeout or block until a message is available.
+            if (_server.TryReceiveFrameString(out string recv))
+            {
+                //Debug.Log($"Received: {recv}");
+
+                string[] pos = recv.Split(',');
+                lastPosition = new Vector3(-float.Parse(pos[0]), -float.Parse(pos[1]), -float.Parse(pos[2]));
+            }
+            yield return null; // Yield every frame, effectively making this non-blocking.
         }
     }
 
@@ -83,44 +90,8 @@ public class ParallaxEffect : MonoBehaviour
         initialMainCameraPos = lastPosition;
     }
 
-    private void HandleClientComm(TcpClient client)
-    {
-        try
-        {
-            NetworkStream stream = client.GetStream();
-            byte[] buffer = new byte[1024];
-            int bytesRead = stream.Read(buffer, 0, buffer.Length);
-
-            if (bytesRead > 0)
-            {
-                string receivedData = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                Debug.Log("Received: " + receivedData);
-
-                // Split the received data
-                var values = receivedData.Split(',');
-                if (values.Length == 3)
-                {
-                    float x = float.Parse(values[0]);
-                    float y = float.Parse(values[1]);
-                    float z = float.Parse(values[2]);
-
-                    lastPosition = new Vector3(x, y, z);
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"Error: {e.Message}");
-        }
-        finally
-        {
-            client.Close();
-        }
-    }
-
     private void OnApplicationQuit()
     {
         isRunning = false;
-        listener.Stop();
     }
 }

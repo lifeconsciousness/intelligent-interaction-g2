@@ -65,7 +65,7 @@ class EyeTracking:
                     self.x_position = x_right_eye + right_eye_width / 2
                     self.y_position = y_right_eye + right_eye_height / 2
                     self.distance = distance
-            time.sleep(0.01)
+            #time.sleep(0.01)
 
         cap.release()
 
@@ -83,6 +83,7 @@ if __name__ == "__main__":
     try:
         while not eye_tracking.stop_event.is_set():
             x, y, distance = eye_tracking.getPosition()
+            print(x, y, distance)
             time.sleep(0.1) 
     except KeyboardInterrupt:
         eye_tracking.stop()
