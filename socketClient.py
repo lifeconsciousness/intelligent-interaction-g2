@@ -1,18 +1,27 @@
 import socket
-import random
+from eyetracking import EyeTracking
+import threading
+import time
 
 def main():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect(('localhost', 2000))
 
-    x = random.uniform(-1, 1)
-    y = random.uniform(-1, 1)
-    z = random.uniform(-1, 1)
-        
-    message = f"{x},{y},{z}"
-    s.sendall(message.encode('utf-8'))
-    
-    s.close()
+    eye_tracking = EyeTracking()
+    tracking_thread = threading.Thread(target=eye_tracking.eye_tracking)
+    tracking_thread.start()
+
+    try:
+        while not eye_tracking.stop_event.is_set():
+            x, y, distance = eye_tracking.getPosition()
+            print(x, y, distance)
+            s.sendall(f'{x} {y} {distance}'.encode())
+            time.sleep(0.1) 
+    except KeyboardInterrupt:
+        eye_tracking.stop()
+    finally:
+        tracking_thread.join()
+        s.close()
 
 if __name__ == "__main__":
     main()
