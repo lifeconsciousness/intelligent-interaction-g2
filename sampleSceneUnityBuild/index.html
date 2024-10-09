@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="utf-8">
+  <title>Unity WebGL Player | 3D-parallax</title>
+  <link rel="shortcut icon" href="TemplateData/favicon.ico">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <script async src="opencv.js"></script> <!-- Ensure opencv.js is included -->
+  <script src="utils.js"></script> <!-- Include utils.js here -->
+</head>
+
+<body>
+  <h2>3D-parallax with Eye Tracking</h2>
+  <p id="status">OpenCV.js is loading...</p>
+  <div>
+    <video id="videoStream" width="640" height="480" autoplay></video>
+    <canvas id="outputCanvas" width="640" height="480"></canvas>
+  </div>
+
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas" width="960" height="600" tabindex="-1"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-warning"></div>
+    <div id="unity-footer">
+      <div id="unity-webgl-logo"></div>
+      <div id="unity-fullscreen-button"></div>
+      <div id="unity-build-title">3D-parallax</div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var isStreaming = true; // Variable to control video streaming
+    var utils; // Declare a variable to hold the Utils reference
+    var unityInstance;
+
+    var Module = {
+      onRuntimeInitialized() {
+        document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+        initializeOpenCV();
+      }
+    };
+
+    function initializeOpenCV() {
+      console.log("OpenCV.js is ready");
+      utils = new Utils(); // Create a new instance of Utils
+
+      let videoStream = document.getElementById('videoStream');
+      let inputMatrix = new cv.Mat(videoStream.height, videoStream.width, cv.CV_8UC4);
+      let outputMatrix = new cv.Mat(videoStream.height, videoStream.width, cv.CV_8UC4);
+      let grayMatrix = new cv.Mat();
+      let videoCapture = new cv.VideoCapture(videoStream);
+      let detectedFaces = new cv.RectVector();
+      let detectedEyes = new cv.RectVector();
+      let faceDetector = new cv.CascadeClassifier();
+      let eyeDetector = new cv.CascadeClassifier();
+
+      // Load Haar Cascade classifiers for face and eyes
+      Promise.all([
+        loadCascadeFile(faceDetector, "haarcascade_frontalface_default.xml"),
+        loadCascadeFile(eyeDetector, "haarcascade_eye_tree_eyeglasses.xml")
+      ]).then(() => {
+        initCamera().then(() => {
+          console.log("Webcam streaming started.");
+          processVideo(videoCapture, inputMatrix, outputMatrix, grayMatrix, detectedFaces, detectedEyes, faceDetector, eyeDetector);
+        });
+      }).catch(error => {
+        console.error("Error loading classifier:", error);
+      });
+    }
+
+    function loadCascadeFile(classifier, url) {
+      return new Promise((resolve, reject) => {
+        utils.createFileFromUrl(url, url, () => {
+          classifier.load(url); // Load the cascade from the file
+          resolve();
+        });
+      });
+    }
+
+    function initCamera() {
+      return new Promise((resolve, reject) => {
+        navigator.mediaDevices.getUserMedia({ video: true })
+          .then(stream => {
+            document.getElementById('videoStream').srcObject = stream;
+            resolve();
+          })
+          .catch(err => {
+            console.error("Error accessing webcam:", err);
+            reject(err);
+          });
+      });
+    }
+
+    function processVideo(videoCapture, inputMatrix, outputMatrix, grayMatrix, detectedFaces, detectedEyes, faceDetector, eyeDetector) {
+      const FPS = 60;
+      function detectAndDraw() {
+        if (!isStreaming) {
+          // Clean up
+          inputMatrix.delete();
+          outputMatrix.delete();
+          grayMatrix.delete();
+          detectedFaces.delete();
+          detectedEyes.delete();
+          faceDetector.delete();
+          eyeDetector.delete();
+          return;
+        }
+
+        videoCapture.read(inputMatrix); // Read frame from video
+        inputMatrix.copyTo(outputMatrix); // Copy source to destination
+        cv.cvtColor(outputMatrix, grayMatrix, cv.COLOR_RGBA2GRAY); // Convert to grayscale
+
+        // Detect faces
+        faceDetector.detectMultiScale(grayMatrix, detectedFaces, 1.1, 3, 0);
+
+        // Draw rectangles around detected faces
+        for (let i = 0; i < detectedFaces.size(); ++i) {
+          let face = detectedFaces.get(i);
+          let point1 = new cv.Point(face.x, face.y);
+          let point2 = new cv.Point(face.x + face.width, face.y + face.height);
+          cv.rectangle(outputMatrix, point1, point2, [255, 0, 0, 255]); // Draw face rectangle
+
+          // Detect eyes within the face region
+          let faceROI = grayMatrix.roi(face);
+          eyeDetector.detectMultiScale(faceROI, detectedEyes, 1.1, 3, 0);
+
+          // Check if there's at least one eye detected
+          if (detectedEyes.size() > 0) {
+            let leftEye = detectedEyes.get(0); // Assume the first detected eye is the left eye
+            let leftEyeX = face.x + leftEye.x + leftEye.width / 2; // Calculate the center of the left eye
+            let leftEyeY = face.y + leftEye.y + leftEye.height / 2;
+
+            // Draw left eye rectangle
+            let leftEyePoint1 = new cv.Point(face.x + leftEye.x, face.y + leftEye.y);
+            let leftEyePoint2 = new cv.Point(face.x + leftEye.x + leftEye.width, face.y + leftEye.y + leftEye.height);
+            cv.rectangle(outputMatrix, leftEyePoint1, leftEyePoint2, [0, 255, 0, 255]); // Draw eye rectangle
+
+            // Send the position of the left eye to Unity
+            sendEyeTrackingData(leftEyeX / videoStream.width, leftEyeY / videoStream.height); // Normalize coordinates
+          }
+
+          faceROI.delete(); // Clean up ROI
+        }
+
+
+        // Show the processed frame
+        cv.imshow('outputCanvas', outputMatrix);
+
+        // Schedule the next frame processing
+        setTimeout(detectAndDraw, 1000 / FPS);
+      }
+
+      // Start processing when the video is playing
+      videoStream.addEventListener('play', () => {
+        detectAndDraw();
+      });
+    }
+
+    var loadingBar = document.querySelector("#unity-loading-bar");
+
+
+    // Send eye tracking data to Unity
+    function sendEyeTrackingData(x, y) {
+      if (unityInstance) {
+
+        unityInstance.SendMessage('Main Camera', 'UpdateEyeTrackingData', x + ',' + y); // Update with your GameObject name
+      }
+    }
+
+    // Show a temporary message banner for warnings/errors
+    function unityShowBanner(msg, type) {
+      function updateBannerVisibility() {
+        warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+      }
+      var div = document.createElement('div');
+      div.innerHTML = msg;
+      warningBanner.appendChild(div);
+      if (type == 'error') div.style = 'background: red; padding: 10px;';
+      else if (type == 'warning') {
+        div.style = 'background: yellow; padding: 10px;';
+        setTimeout(function () {
+          warningBanner.removeChild(div);
+          updateBannerVisibility();
+        }, 5000);
+      }
+      updateBannerVisibility();
+    }
+
+    // Unity initialization code
+    var buildUrl = "Build"; // Keep this as Build if that's your folder structure
+    var loaderUrl = buildUrl + "/unitybuild2.loader.js"; // Update to the new loader file
+    var config = {
+      dataUrl: buildUrl + "/unitybuild2.data",
+      frameworkUrl: buildUrl + "/unitybuild2.framework.js",
+      codeUrl: buildUrl + "/unitybuild2.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "3D-parallax",
+      productVersion: "0.1",
+      showBanner: unityShowBanner,
+    };
+
+    // Responsive design for mobile devices
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      var meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+      document.getElementsByTagName('head')[0].appendChild(meta);
+      document.getElementById('unity-container').className = "unity-mobile";
+      document.getElementById('unity-canvas').className = "unity-mobile";
+    } else {
+      document.getElementById('unity-canvas').style.width = "960px";
+      document.getElementById('unity-canvas').style.height = "600px";
+    }
+
+    loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(document.getElementById("unity-canvas"), config, (progress) => {
+        document.getElementById("unity-progress-bar-full").style.width = 100 * progress + "%";
+      }).then((local_unityInstance) => {
+        document.getElementById("unity-loading-bar").style.display = "none";
+        unityInstance = local_unityInstance; // Store the unity instance
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+</body>
+
+</html>
