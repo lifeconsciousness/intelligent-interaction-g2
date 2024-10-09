@@ -1,1 +1,1 @@
-Use unity version 2022.3.47f1 for the unity project.
+READ THE COMMIT MESSAGES TO UNDERSTAND HOW TO WORK WITH WEBCAM module and the unity folder
