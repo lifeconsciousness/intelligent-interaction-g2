@@ -15,7 +15,7 @@ def main():
     old_values = (0, 0, 0)
 
     try:
-        while not eye_tracking.stop_event.is_set():
+        while True:
             x, y, distance = eye_tracking.getPosition()
             if old_values == (x, y, distance):
                 continue
