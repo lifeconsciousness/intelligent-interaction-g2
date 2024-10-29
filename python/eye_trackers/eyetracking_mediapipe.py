@@ -2,6 +2,7 @@ import cv2
 import mediapipe as mp
 import threading
 import time
+from interfaces.eyetracker import EyeTrackerInterface
 
 mp_face_mesh = mp.solutions.face_mesh
 mp_drawing = mp.solutions.drawing_utils
@@ -16,13 +17,10 @@ KNOWN_DISTANCE = 76.2
 KNOWN_FACE_WIDTH = 3.0  
 FOCAL_LENGTH = 381.0  
 
-class EyeTracking:
+class EyeTrackingMediapipe(EyeTrackerInterface):
 
     def __init__ (self):
-        self.x_position = 0
-        self.y_position = 0
-        self.distance = 0
-        self.stop_event = threading.Event() 
+        super().__init__()
 
     def getRightEyeRect(self, image, landmarks):
         eye_top = int(landmarks[RIGHT_EYE_TOP].y * image.shape[0])
@@ -69,14 +67,8 @@ class EyeTracking:
 
         cap.release()
 
-    def getPosition(self):
-        return self.x_position, self.y_position, self.distance
-
-    def stop(self):
-        self.stop_event.set()
-
 if __name__ == "__main__":
-    eye_tracking = EyeTracking()
+    eye_tracking = EyeTrackingMediapipe()
     tracking_thread = threading.Thread(target=eye_tracking.eye_tracking)
     tracking_thread.start()
 
