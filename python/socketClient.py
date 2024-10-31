@@ -1,12 +1,13 @@
-import zmq
 from eyetracking import EyeTracking
 import threading
-import time
+import socket
+import json
 
 def main():
-    context = zmq.Context()
-    socket = context.socket(zmq.PUSH)
-    socket.connect('tcp://localhost:2000')
+    # Set up UDP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    UDP_IP = "127.0.0.1"  # Use the local loopback address or the IP of the machine running Unity/Godot
+    UDP_PORT = 5005
 
     eye_tracking = EyeTracking()
     tracking_thread = threading.Thread(target=eye_tracking.eye_tracking)
@@ -16,13 +17,19 @@ def main():
 
     try:
         while True:
-            x, y, distance = eye_tracking.getPosition()
-            if old_values == (x, y, distance):
+            x, y, z = eye_tracking.getPosition()
+            if old_values == (x, y, z):
                 continue
-            old_values = (x, y, distance)
-            #print(x, y, distance)
-            socket.send_string(f'{x},{y},{distance}')
-            #time.sleep(0.1)
+            old_values = (x, y, z)
+
+            coords = {
+                "x": x,
+                "y": y,
+                "z": z
+            }
+
+            # Send the coordinates as a JSON string over UDP
+            sock.sendto(json.dumps(coords).encode(), (UDP_IP, UDP_PORT))
     except KeyboardInterrupt:
         eye_tracking.stop()
     except Exception as e:
@@ -30,7 +37,6 @@ def main():
         exit()
     finally:
         tracking_thread.join()
-        context.term()
 
 if __name__ == "__main__":
     main()
