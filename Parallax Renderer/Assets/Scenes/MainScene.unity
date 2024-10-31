@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parallaxFactor: 0.01
-  smoothing: 0.1
+  smoothing: 0.05
   autoResetDelay: 1
 --- !u!1 &1678324082
 GameObject:
