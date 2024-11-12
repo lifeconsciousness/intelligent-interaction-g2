@@ -13,21 +13,37 @@ public class ObjectSpawner : MonoBehaviour
 
     void Update()
     {
+        // Update spawner's position to match player's x and y, but keep its z unchanged
+        Vector3 playerPosition = player.position;
+        transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
+
         // Check if it's time to spawn a new object
         if (Time.time >= nextSpawnTime)
         {
             SpawnObject();
             nextSpawnTime = Time.time + 1f / spawnRate;
         }
+
     }
 
     void SpawnObject()
     {
         // Randomize the spawn position (this can be adjusted as needed)
-        Vector3 spawnPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 20f);
+        // Vector3 spawnPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 20f);
+
+        // Get the spawner's current position
+        Vector3 spawnerPosition = transform.position;
+
+        // Randomize the spawn position around the spawner's position
+        float randomX = spawnerPosition.x + Random.Range(-10f, 10f);
+        float randomY = spawnerPosition.y + Random.Range(-10f, 10f);
+        float spawnZ = spawnerPosition.z + 20f;
+
+        Vector3 spawnPosition = new Vector3(randomX, randomY, spawnZ);
 
         // Instantiate the object
         GameObject obj = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
+        obj.tag = "Enemy0";
 
         // Add a script to move the object and destroy it when it reaches the player
         obj.AddComponent<ObjectMover>().Initialize(player, objectSpeed, destructionDistance, this);

@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     public float parallaxFactor = 0.5f;
     public float smoothing = 0.1f; // Adjust this value to increase or decrease smoothing
     public float autoResetDelay = 5f; // Time in seconds before automatic reset
+    public float wasdMoveSpeed = 10f;
 
     private Vector3 initialMainCameraPos;
     private Vector3 initialParallaxCameraPos;
@@ -50,7 +51,7 @@ public class CameraController : MonoBehaviour
             }
 
             lastPosition = smoothedPosition; // Update the last position to the smoothed position
-        }
+        } 
     }
 
     private void ResetParallaxCamera()
