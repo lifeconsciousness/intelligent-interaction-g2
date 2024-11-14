@@ -9,6 +9,7 @@ public class ObjectSpawner : MonoBehaviour
     public float destructionDistance = 1f; // Distance at which the object gets destroyed
     public int score = 0;            // The player's score
 
+    public Quaternion spawnRotation = Quaternion.identity;
     private float nextSpawnTime = 0f;
 
     void Update()
@@ -42,7 +43,7 @@ public class ObjectSpawner : MonoBehaviour
         Vector3 spawnPosition = new Vector3(randomX, randomY, spawnZ);
 
         // Instantiate the object
-        GameObject obj = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
+        GameObject obj = Instantiate(objectPrefab, spawnPosition, spawnRotation);
         obj.tag = "Enemy0";
 
         // Add a script to move the object and destroy it when it reaches the player
