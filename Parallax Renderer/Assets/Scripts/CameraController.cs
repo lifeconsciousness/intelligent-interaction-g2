@@ -9,7 +9,6 @@ public class CameraController : MonoBehaviour
     public float smoothing = 0.1f; // Adjust this value to increase or decrease smoothing
     public float autoResetDelay = 5f; // Time in seconds before automatic reset
     public float wasdMoveSpeed = 10f;
-    public float autoResetDelay = 1f; // Time in seconds before automatic reset
     public float depthMultiplier = 3f; // Adjust this value to increase or decrease depth
 
     private Vector3 initialMainCameraPos;
