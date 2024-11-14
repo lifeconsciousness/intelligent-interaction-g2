@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     public Transform target; // The target that the camera will look at
     public float parallaxFactor = 0.02f;
     public float smoothing = 0.1f; // Adjust this value to increase or decrease smoothing
+    public float autoResetDelay = 5f; // Time in seconds before automatic reset
+    public float wasdMoveSpeed = 10f;
     public float autoResetDelay = 1f; // Time in seconds before automatic reset
     public float depthMultiplier = 3f; // Adjust this value to increase or decrease depth
 
@@ -57,7 +59,9 @@ public class CameraController : MonoBehaviour
             {
                 ResetParallaxCamera();
             }
-        }
+            lastPosition = smoothedPosition; // Update the last position to the smoothed position
+        } 
+
     }
 
     private void ResetParallaxCamera()
