@@ -1,83 +1,95 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.UI; // Import the UI namespace
 
 public class CameraController : MonoBehaviour
 {
-    private Camera parallaxCamera;
-    public Transform target; // The target that the camera will look at
-    public float parallaxFactor = 0.02f;
-    public float smoothing = 0.1f; // Adjust this value to increase or decrease smoothing
-    public float autoResetDelay = 5f; // Time in seconds before automatic reset
-    public float wasdMoveSpeed = 10f;
-    public float depthMultiplier = 3f; // Adjust this value to increase or decrease depth
+    private AsymFrustum asymFrustum; // Reference to the AsymFrustum script
+    private FaceTrackerReceiver faceTracker;
+    private float cameraDistance;
 
-    private Vector3 initialMainCameraPos;
-    private Vector3 initialParallaxCameraPos;
-    private Vector3 lastPosition;
+    // Smoothing parameters
+    public float smoothTime = 0.3f; // Time to smooth to the target position
+    private Vector3 targetPosition; // The target position the camera should move towards
+    private Vector3 currentVelocity = Vector3.zero; // Current velocity for smooth dampening
+
+    // Reference to the UI Slider
+    public Slider distanceSlider;
 
     void Start()
     {
-        parallaxCamera = GetComponent<Camera>();
-
-        if (parallaxCamera == null)
+        cameraDistance = GetComponent<Camera>().transform.position.z; // Get the initial camera distance
+        asymFrustum = GetComponent<AsymFrustum>();
+        if (asymFrustum == null)
         {
-            Debug.LogError("Camera not found, make sure this script is attached to an object with a Camera component!");
-            return;
+            Debug.LogError("AsymFrustum reference is not set. Please assign it in the Inspector.");
         }
 
-        initialMainCameraPos = Vector3.zero;
-        initialParallaxCameraPos = parallaxCamera.transform.position;
-        lastPosition = initialMainCameraPos;
+        faceTracker = FaceTrackerReceiver.Instance;
+        if (faceTracker == null)
+        {
+            Debug.LogError("FaceTrackerReceiver instance is not set. Please ensure it exists in the scene.");
+        }
 
-        // Start the coroutine for automatic reset
-        StartCoroutine(AutoResetParallaxCamera());
+        // Initialize the slider value and add a listener for value changes
+        if (distanceSlider != null)
+        {
+            distanceSlider.value = -cameraDistance; // Set the slider to the current camera distance
+            distanceSlider.onValueChanged.AddListener(OnSliderValueChanged);
+        }
     }
 
     void Update()
     {
-        if (FaceTrackerReceiver.Instance != null)
+        if (asymFrustum == null || faceTracker == null)
         {
-            var coords = FaceTrackerReceiver.Instance.coordinates;
-            Vector3 vectorCoords = new Vector3(-coords.x, -coords.y, -coords.z * depthMultiplier);
-
-            // Smooth the coordinates using Lerp
-            Vector3 smoothedPosition = Vector3.Lerp(lastPosition, vectorCoords, smoothing);
-            Vector3 delta = smoothedPosition - initialMainCameraPos;
-
-            // Apply the parallax effect
-            parallaxCamera.transform.position = initialParallaxCameraPos + delta * parallaxFactor;
-
-            lastPosition = smoothedPosition; // Update the last position to the smoothed position
-            // Make the camera look at the target
-            if (target != null)
-            {
-                parallaxCamera.transform.LookAt(target);
-            }
-
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                ResetParallaxCamera();
-            }
-            lastPosition = smoothedPosition; // Update the last position to the smoothed position
-        } 
-
-    }
-
-    private void ResetParallaxCamera()
-    {
-        parallaxCamera.transform.position = initialParallaxCameraPos;
-        initialMainCameraPos = lastPosition; // Update the initial main camera position to the last position
-
-        if (target != null)
-        {
-            parallaxCamera.transform.LookAt(target);
+            return;
         }
+
+        MapAndSetCameraPosition();
     }
 
-    private IEnumerator AutoResetParallaxCamera()
+    private void MapAndSetCameraPosition()
     {
-        // Wait for the specified delay
-        yield return new WaitForSeconds(autoResetDelay);
-        ResetParallaxCamera();
+        // Real-world boundaries
+        float realMinX = faceTracker.minMaxValues.minX; // Get these from FaceTrackerReceiver
+        float realMaxX = faceTracker.minMaxValues.maxX;
+        float realMinY = faceTracker.minMaxValues.minY;
+        float realMaxY = faceTracker.minMaxValues.maxY;
+
+        // Virtual world boundaries
+        float virtualMinX = -asymFrustum.width / 2;
+        float virtualMaxX = asymFrustum.width / 2;
+        float virtualMinY = -asymFrustum.height / 2;
+        float virtualMaxY = asymFrustum.height / 2;
+
+        // Map real-world coordinates to virtual coordinates
+        float mappedX = MapValue(faceTracker.coordinates.x, realMinX, realMaxX, virtualMinX, virtualMaxX);
+        float mappedY = MapValue(faceTracker.coordinates.y, realMinY, realMaxY, virtualMinY, virtualMaxY);
+
+        // Calculate the target position in world space
+        targetPosition = new Vector3(mappedX, mappedY, -distanceSlider.value);
+
+        // Smoothly move to the target position
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
+    }
+
+    private void OnSliderValueChanged(float value)
+    {
+        cameraDistance = -value; // Update the camera distance based on slider value
+    }
+
+    private float MapValue(float value, float realMin, float realMax, float virtualMin, float virtualMax)
+    {
+        // Handle cases where realMax equals realMin to avoid division by zero
+        if (realMax == realMin)
+        {
+            return virtualMin; // Or handle it in a way that suits your application
+        }
+
+        // Normalize the value to the range [0, 1]
+        float normalizedValue = (value - realMin) / (realMax - realMin);
+
+        // Scale to the virtual range
+        return normalizedValue * (virtualMax - virtualMin) + virtualMin;
     }
 }

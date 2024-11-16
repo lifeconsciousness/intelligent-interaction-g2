@@ -51,5 +51,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Parallax Renderer.sln"
+    "dotnet.defaultSolution": "Parallax Renderer.sln",
+    "editor.formatOnSave": true
 }
