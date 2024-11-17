@@ -817,7 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c98f0ac873ec1693a0b1660fcb716db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.3
+  smoothTime: 0.5
   distanceSlider: {fileID: 1437922926}
 --- !u!1 &1011961550
 GameObject:
