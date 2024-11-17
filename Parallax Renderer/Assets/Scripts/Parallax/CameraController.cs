@@ -15,8 +15,11 @@ public class CameraController : MonoBehaviour
     // Reference to the UI Slider
     public Slider distanceSlider;
 
+    private Vector3 initialPosition;
+
     void Start()
     {
+        initialPosition = transform.position; // Store the initial position of the camera
         cameraDistance = GetComponent<Camera>().transform.position.z; // Get the initial camera distance
         asymFrustum = GetComponent<AsymFrustum>();
         if (asymFrustum == null)
