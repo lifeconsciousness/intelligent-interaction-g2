@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
         {
             distanceSlider.value = -cameraDistance; // Set the slider to the current camera distance
             distanceSlider.onValueChanged.AddListener(OnSliderValueChanged);
+            distanceSlider.minValue = -asymFrustum.virtualWindow.transform.position.z + GetComponent<Camera>().transform.position.z + 0.3f;
         }
     }
 
