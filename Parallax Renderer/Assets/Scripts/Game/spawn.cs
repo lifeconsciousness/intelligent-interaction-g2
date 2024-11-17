@@ -19,7 +19,7 @@ public class ObjectSpawner : MonoBehaviour
         transform.position = new Vector3(playerPosition.x, playerPosition.y, transform.position.z);
 
         // Check if it's time to spawn a new object
-        if (Time.time >= nextSpawnTime)
+        if (Time.time >= nextSpawnTime && !GameManager.Instance.isGameOver)
         {
             SpawnObject();
             nextSpawnTime = Time.time + 1f / spawnRate;
@@ -71,6 +71,7 @@ public class ObjectMover : MonoBehaviour
     private float speed;
     private float destructionDistance;
     private ObjectSpawner spawner;  // Reference to the spawner to update score
+    public GameObject gameState;
 
     // Initialize the object with the player's reference, speed, destruction distance, and spawner reference
     public void Initialize(Transform playerTransform, float moveSpeed, float destroyDistance, ObjectSpawner objectSpawner)
@@ -83,8 +84,19 @@ public class ObjectMover : MonoBehaviour
 
     void Update()
     {
-        // Move the object towards the player's z-axis, but move further after passing the player's z-axis
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(player.position.x, player.position.y, player.position.z - 10f), speed * Time.deltaTime);
+        if (GameManager.Instance.isGameOver)
+        {
+            return;
+        }
+
+        // Capture the current position
+        Vector3 currentPosition = transform.position;
+
+        // Create a new position for the next step along the Z-axis towards the player
+        Vector3 targetPosition = new Vector3(currentPosition.x, currentPosition.y, player.position.z - 10f);
+
+        // Move the object towards the target position
+        transform.position = Vector3.MoveTowards(currentPosition, targetPosition, speed * Time.deltaTime);
 
         // Destroy the object if it moves behind the player (past the camera)
         if (transform.position.z < player.position.z - destructionDistance)

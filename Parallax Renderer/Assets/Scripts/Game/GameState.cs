@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +10,16 @@ public class GameManager : MonoBehaviour
     // Player health
     public int playerHealth = 100;
 
+    public bool isGameOver = false;
+    public GameObject gameOverScreen;
+    public TMP_Text healthText;
+
+    void Start()
+    {
+        gameOverScreen.SetActive(false);
+        healthText.text = "HP: " + playerHealth;
+    }
+
     void Awake()
     {
         // Implement Singleton pattern to ensure only one GameManager exists
@@ -16,7 +28,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
+
         Instance = this;
         DontDestroyOnLoad(gameObject);  // Preserve this object across scenes
     }
@@ -25,13 +37,16 @@ public class GameManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         playerHealth -= damage;
-        if (playerHealth < 0)
+        if (playerHealth <= 0)
         {
             playerHealth = 0;
             Debug.Log("Player has died.");
+            isGameOver = true;
+            gameOverScreen.SetActive(true);
             // You could add additional logic for game over or player death here
         }
         Debug.Log("Player Health: " + playerHealth);
+        healthText.text = "HP: " + playerHealth;
     }
 
     // Method to increase player health

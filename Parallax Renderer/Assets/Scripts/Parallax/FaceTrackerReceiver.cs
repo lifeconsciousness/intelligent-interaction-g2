@@ -57,20 +57,12 @@ public class FaceTrackerReceiver : MonoBehaviour
         }
     }
 
-    public Button resetButton;
-
     void Start()
     {
         // Existing start code
         udpClient = new UdpClient(5005);
         remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
         minMaxValues.Reset(); // Initialize the min/max values on start
-
-        // Add listener for the reset button
-        if (resetButton != null)
-        {
-            resetButton.onClick.AddListener(ResetPosition);
-        }
     }
 
     void Update()
@@ -112,7 +104,7 @@ public class FaceTrackerReceiver : MonoBehaviour
         if (coordinates.z > minMaxValues.maxZ) minMaxValues.maxZ = coordinates.z;
     }
 
-    private void ResetPosition()
+    public void ResetPosition()
     {
         // Save the current coordinates as the offset
         resetOffset = new Vector3(coordinates.x, coordinates.y, coordinates.z);

@@ -5,23 +5,22 @@ public class CameraController : MonoBehaviour
 {
     private AsymFrustum asymFrustum; // Reference to the AsymFrustum script
     private FaceTrackerReceiver faceTracker;
-    private float cameraDistance;
+    public float cameraDistance;
 
     // Smoothing parameters
     public float smoothTime = 0.3f; // Time to smooth to the target position
     private Vector3 targetPosition; // The target position the camera should move towards
     private Vector3 currentVelocity = Vector3.zero; // Current velocity for smooth dampening
 
-    // Reference to the UI Slider
-    public Slider distanceSlider;
-
     private Vector3 initialPosition;
+    private Camera mainCamera;
 
     void Start()
     {
-        initialPosition = transform.position; // Store the initial position of the camera
-        cameraDistance = GetComponent<Camera>().transform.position.z; // Get the initial camera distance
-        asymFrustum = GetComponent<AsymFrustum>();
+        mainCamera = FindObjectOfType<Camera>();
+        initialPosition = mainCamera.transform.position; // Store the initial position of the camera
+        cameraDistance = mainCamera.transform.position.z; // Get the initial camera distance
+        asymFrustum = FindObjectOfType<AsymFrustum>();
         if (asymFrustum == null)
         {
             Debug.LogError("AsymFrustum reference is not set. Please assign it in the Inspector.");
@@ -31,14 +30,6 @@ public class CameraController : MonoBehaviour
         if (faceTracker == null)
         {
             Debug.LogError("FaceTrackerReceiver instance is not set. Please ensure it exists in the scene.");
-        }
-
-        // Initialize the slider value and add a listener for value changes
-        if (distanceSlider != null)
-        {
-            distanceSlider.value = -cameraDistance; // Set the slider to the current camera distance
-            distanceSlider.onValueChanged.AddListener(OnSliderValueChanged);
-            distanceSlider.minValue = -asymFrustum.virtualWindow.transform.position.z + GetComponent<Camera>().transform.position.z + 0.3f;
         }
     }
 
@@ -71,15 +62,10 @@ public class CameraController : MonoBehaviour
         float mappedY = MapValue(faceTracker.coordinates.y, realMinY, realMaxY, virtualMinY, virtualMaxY);
 
         // Calculate the target position in world space
-        targetPosition = initialPosition + new Vector3(mappedX, mappedY, -distanceSlider.value);
+        targetPosition = initialPosition + new Vector3(mappedX, mappedY, cameraDistance);
 
         // Smoothly move to the target position
-        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
-    }
-
-    private void OnSliderValueChanged(float value)
-    {
-        cameraDistance = -value; // Update the camera distance based on slider value
+        mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, targetPosition, ref currentVelocity, smoothTime);
     }
 
     private float MapValue(float value, float realMin, float realMax, float virtualMin, float virtualMax)

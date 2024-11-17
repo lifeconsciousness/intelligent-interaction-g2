@@ -40,6 +40,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4629201026508248474}
+  - component: {fileID: 3499661905584035862}
+  - component: {fileID: 6823227031653191680}
+  - component: {fileID: 3025354056627492733}
   m_Layer: 0
   m_Name: CameraRig
   m_TagString: Untagged
@@ -62,9 +65,59 @@ Transform:
   m_Children:
   - {fileID: 3731627460600802689}
   - {fileID: 3828385507770932056}
-  - {fileID: 8887132593881222763}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3499661905584035862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335251644520871834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f096448ef5672225aff55504539f3d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceSlider: {fileID: 0}
+  resetButton: {fileID: 0}
+--- !u!114 &6823227031653191680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335251644520871834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c98f0ac873ec1693a0b1660fcb716db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraDistance: 0
+  smoothTime: 0.5
+--- !u!114 &3025354056627492733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335251644520871834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed96701225072f485a8762839c87812c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coordinates:
+    x: 0
+    y: 0
+    z: 0
+  minMaxValues:
+    minX: 3.4028235e+38
+    maxX: -3.4028235e+38
+    minY: 3.4028235e+38
+    maxY: -3.4028235e+38
+    minZ: 3.4028235e+38
+    maxZ: -3.4028235e+38
 --- !u!1 &3957818623221354161
 GameObject:
   m_ObjectHideFlags: 0
@@ -77,7 +130,6 @@ GameObject:
   - component: {fileID: 6228863118324858680}
   - component: {fileID: 7692799389252460725}
   - component: {fileID: 1180504356978782846}
-  - component: {fileID: 4448750075634062357}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -176,73 +228,3 @@ MonoBehaviour:
   height: 4.04
   maxHeight: 2000
   verbose: 0
---- !u!114 &4448750075634062357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3957818623221354161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c98f0ac873ec1693a0b1660fcb716db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  smoothTime: 0.5
-  distanceSlider: {fileID: 0}
---- !u!1 &4930431275120630582
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8887132593881222763}
-  - component: {fileID: 3825167586083292952}
-  m_Layer: 0
-  m_Name: FaceTrackingReceiver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8887132593881222763
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4930431275120630582}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4629201026508248474}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3825167586083292952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4930431275120630582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed96701225072f485a8762839c87812c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  coordinates:
-    x: 0
-    y: 0
-    z: 0
-  minMaxValues:
-    minX: 3.4028235e+38
-    maxX: -3.4028235e+38
-    minY: 3.4028235e+38
-    maxY: -3.4028235e+38
-    minZ: 3.4028235e+38
-    maxZ: -3.4028235e+38
-  resetButton: {fileID: 0}
