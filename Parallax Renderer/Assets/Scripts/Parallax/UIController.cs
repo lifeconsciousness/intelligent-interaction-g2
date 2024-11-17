@@ -14,7 +14,7 @@ public class UIController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cameraController = GetComponent<CameraController>();
+        cameraController = FindObjectOfType<CameraController>();
         faceTracker = FaceTrackerReceiver.Instance;
         float cameraDistance = cameraController.cameraDistance;
         asymFrustum = FindObjectOfType<AsymFrustum>();
