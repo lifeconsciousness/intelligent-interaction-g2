@@ -1078,7 +1078,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29267d11bfed24170b8788bee8faecf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 42752541570496862, guid: 48685956d5a644b788c330cdc838a6be, type: 3}
+  objectPrefab: {fileID: 1981849707}
   spawnRate: 20
   objectSpeed: 10
   player: {fileID: 1922237781}
@@ -1702,8 +1702,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualWindow: {fileID: 2022760608}
-  width: 7.2
-  height: 4.04
+  width: 14.4
+  height: 8.08
   maxHeight: 500
   verbose: 0
 --- !u!81 &1922237784
