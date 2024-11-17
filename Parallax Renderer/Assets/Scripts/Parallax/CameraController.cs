@@ -70,7 +70,7 @@ public class CameraController : MonoBehaviour
         float mappedY = MapValue(faceTracker.coordinates.y, realMinY, realMaxY, virtualMinY, virtualMaxY);
 
         // Calculate the target position in world space
-        targetPosition = new Vector3(mappedX, mappedY, -distanceSlider.value);
+        targetPosition = initialPosition + new Vector3(mappedX, mappedY, -distanceSlider.value);
 
         // Smoothly move to the target position
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
