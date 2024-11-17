@@ -6,7 +6,7 @@ public class ObjectSpawner : MonoBehaviour
     public float spawnRate = 1f;     // How often to spawn objects
     public float objectSpeed = 5f;   // Speed of objects towards the player (on the z-axis)
     public Transform player;         // Reference to the player (camera)
-    public float destructionDistance = 1f; // Distance at which the object gets destroyed
+    public float destructionDistance = -5f; // Distance at which the object gets destroyed
     public int score = 0;            // The player's score
 
     public Quaternion spawnRotation = Quaternion.identity;
