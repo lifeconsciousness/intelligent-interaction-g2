@@ -33,6 +33,14 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);  // Preserve this object across scenes
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            restartGame();
+        }
+    }
+
     // Method to reduce player health
     public void TakeDamage(int damage)
     {
@@ -54,5 +62,13 @@ public class GameManager : MonoBehaviour
     {
         playerHealth += healAmount;
         Debug.Log("Player Health: " + playerHealth);
+    }
+
+    public void restartGame()
+    {
+        playerHealth = 100;
+        isGameOver = false;
+        gameOverScreen.SetActive(false);
+        healthText.text = "HP: " + playerHealth;
     }
 }

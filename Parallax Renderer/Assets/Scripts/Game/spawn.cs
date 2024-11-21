@@ -103,6 +103,11 @@ public class ObjectMover : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Handle collision with the player
