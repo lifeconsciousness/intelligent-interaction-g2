@@ -72,6 +72,7 @@ python3 app.py --haarcascade --video
 
 ```bash
 docker run --rm \
+  --device=/dev/video0:/dev/video0 \
   eye-tracking-app \
   --mediapipe --video
 ```
