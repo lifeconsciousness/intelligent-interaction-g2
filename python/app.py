@@ -13,6 +13,7 @@ parser = ArgumentParser()
 parser.add_argument("--mediapipe", action="store_true", help="Use mediapipe for eye tracking")
 parser.add_argument("--haarcascade", action="store_true", help="Use haarcascade for eye tracking")
 parser.add_argument("--video", action="store_true", help="Display Eye Tracking on video")
+parser.add_argument("--verbose", action="store_true", help="Display verbose output")
 args = parser.parse_args()
 
 def main(eye_tracking: EyeTrackerInterface, socket_client = None):
@@ -34,7 +35,8 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
                 y = results.y
                 distance = results.distance
 
-                print(f"X: {x}, Y: {y}, Distance: {distance:.2f}")
+                if args.verbose:
+                    print(f"X: {x}, Y: {y}, Distance: {distance:.2f}")
 
                 if socket_client is not None:
                     socket_client.send_data((x, y, distance))
