@@ -3,6 +3,7 @@ import cv2
 from eye_trackers.eyetracking_mediapipe import EyeTrackingMediapipe
 from eye_trackers.eyetracker import EyeTrackerInterface
 from eye_trackers.eyetracking_haarcascade import EyeTrackingHaarcascade
+from socket_client.socketClient import SocketClient
 
 from argparse import ArgumentParser
 import threading
@@ -35,8 +36,8 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
 
                 print(f"X: {x}, Y: {y}, Distance: {distance:.2f}")
 
-                # if socket_client is not None:
-                # socket_client.send_data((x, y, distance))
+                if socket_client is not None:
+                    socket_client.send_data((x, y, distance))
 
                 if results.eye_rect is not None and args.video:
                     x_rect, y_rect, w_rect, h_rect = results.eye_rect
@@ -66,6 +67,5 @@ if __name__ == "__main__":
         print("Error: Please specify an eye tracker to use.")
         exit(1)
 
-    # socket_client = SocketClient()
-    main(eye_tracking)
-    # main(eye_tracking, socket_client)
+    socket_client = SocketClient()
+    main(eye_tracking, socket_client)
