@@ -24,8 +24,8 @@ class EyeTrackingHaarcascade(EyeTrackerInterface):
         for (x, y, w, h) in faces:
             roi_gray = gray[y:y + h, x:x + w]
 
-            eyes = eye_cascade.detectMultiScale(roi_gray, 1.1, 5)
-            eyes = sorted(eyes, key=lambda e: e[0], reverse=True) 
+            eyes = eye_cascade.detectMultiScale(roi_gray, scaleFactor=1.1, minNeighbors=50, minSize=(90, 90))
+            eyes = sorted(eyes, key=lambda e: e[0]) 
             right_eye = eyes[0] if len(eyes) > 0 else None
 
             if right_eye is not None:
@@ -34,13 +34,13 @@ class EyeTrackingHaarcascade(EyeTrackerInterface):
                 self.x_position = x + ex + ew / 2
                 self.y_position = y + ey + eh / 2
                 self.distance = self.calculate_distance(ew)
-                self.eye_rect = (x, y, ew, eh)
+                self.eye_rect = (x + ex, y + ey, ew, eh)
                 
                 return EyeTrackingResult(
-                    x=x + ex + ew / 2,
-                    y=y + ey + eh / 2,
-                    distance=self.calculate_distance(ew),
-                    eye_rect=(x, y, ew, eh)
+                    x=self.x_position,
+                    y=self.y_position,
+                    distance=self.distance,
+                    eye_rect=self.eye_rect
                 )
         return EyeTrackingResult(
             x=self.x_position,
