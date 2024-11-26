@@ -71,13 +71,14 @@ python3 app.py --haarcascade --video
 
 ```bash
 docker run --rm \
-  --device=/dev/video0:/dev/video0 \
+  --privileged \
+  --net=host \
+  -e DISPLAY=$DISPLAY \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
   eye-tracking-app \
-  --mediapipe --video
+  python app.py --mediapipe --video
 ```
 
 ```bash
 python3 app.py --mediapipe --video
 ```
-
-
