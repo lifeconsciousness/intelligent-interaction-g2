@@ -12,7 +12,7 @@ public class CameraController : MonoBehaviour
     private Vector3 targetPosition; // The target position the camera should move towards
     private Vector3 currentVelocity = Vector3.zero; // Current velocity for smooth dampening
 
-    private Vector3 initialPosition;
+    public Vector3 initialPosition;
     private Camera mainCamera;
 
     void Start()

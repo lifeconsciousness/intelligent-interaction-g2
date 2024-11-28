@@ -4,13 +4,34 @@ public class ObjectSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;  // The object to spawn
     public float spawnRate = 1f;     // How often to spawn objects
-    public float objectSpeed = 5f;   // Speed of objects towards the player (on the z-axis)
+    public float objectSpeedMin = 5f;   // Speed of objects towards the player (on the z-axis)
+    public float objectSpeedMax = 10f;  // Speed of objects towards the player (on the z-axis)
     public Transform player;         // Reference to the player (camera)
     public float destructionDistance = -5f; // Distance at which the object gets destroyed
     public int score = 0;            // The player's score
 
     public Quaternion spawnRotation = Quaternion.identity;
     private float nextSpawnTime = 0f;
+    private CameraController cameraController;
+    private AsymFrustum asymFrustum;
+
+    private Vector3 initialPosition;
+    public float spawnDistance = 100f;
+
+    void Start()
+    {
+        cameraController = FindObjectOfType<CameraController>();
+        asymFrustum = FindObjectOfType<AsymFrustum>();
+
+        if (cameraController == null || asymFrustum == null)
+        {
+            Debug.LogError("Cannot find camera controller or asymmetrical frustum.");
+        }
+
+        initialPosition = cameraController.initialPosition;
+
+
+    }
 
     void Update()
     {
@@ -32,13 +53,10 @@ public class ObjectSpawner : MonoBehaviour
         // Randomize the spawn position (this can be adjusted as needed)
         // Vector3 spawnPosition = new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), 20f);
 
-        // Get the spawner's current position
-        Vector3 spawnerPosition = transform.position;
-
         // Randomize the spawn position around the spawner's position
-        float randomX = spawnerPosition.x + Random.Range(-10f, 10f);
-        float randomY = spawnerPosition.y + Random.Range(-10f, 10f);
-        float spawnZ = spawnerPosition.z + 20f;
+        float randomX = initialPosition.x + Random.Range(-asymFrustum.width / 2, asymFrustum.width / 2);
+        float randomY = initialPosition.y + Random.Range(-asymFrustum.height / 2, asymFrustum.height / 2);
+        float spawnZ = initialPosition.z + spawnDistance;
 
         Vector3 spawnPosition = new Vector3(randomX, randomY, spawnZ);
 
@@ -47,7 +65,7 @@ public class ObjectSpawner : MonoBehaviour
         obj.tag = "Enemy0";
 
         // Add a script to move the object and destroy it when it reaches the player
-        obj.AddComponent<ObjectMover>().Initialize(player, objectSpeed, destructionDistance, this);
+        obj.AddComponent<ObjectMover>().Initialize(player, Random.Range(objectSpeedMin, objectSpeedMax), destructionDistance, this);
     }
 
     // Function to increment the score

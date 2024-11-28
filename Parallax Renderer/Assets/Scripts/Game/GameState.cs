@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public bool isGameOver = false;
     public GameObject gameOverScreen;
+    public GameObject hitIndicator;
     public TMP_Text healthText;
 
     void Start()
@@ -45,6 +46,10 @@ public class GameManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         playerHealth -= damage;
+
+        // Show hit indicator for a brief moment
+
+
         if (playerHealth <= 0)
         {
             playerHealth = 0;
@@ -55,6 +60,15 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("Player Health: " + playerHealth);
         healthText.text = "HP: " + playerHealth;
+
+        hitIndicator.SetActive(true);
+        // Hide the hit indicator after 0.5 seconds
+        Invoke("hideHitIndicator", 0.2f);
+    }
+
+    void hideHitIndicator()
+    {
+        hitIndicator.SetActive(false);
     }
 
     // Method to increase player health
