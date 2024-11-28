@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-CMD ["python", "app.py"]
+CMD ["python", "app.py", "--mediapipe"]
