@@ -1,4 +1,4 @@
-# Blender 4.3.0 MTL File: 'optical illusion tunnel.blend'
+# Blender 4.3.0 MTL File: 'blend.blend'
 # www.blender.org
 
 newmtl Material.001
@@ -12,14 +12,14 @@ d 1.000000
 illum 2
 
 newmtl Material.002
-Ns 250.000000
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd images.png
+map_Kd /home/maclux/Downloads/textures/images.png
 
 newmtl Material.003
 Ns 250.000000
