@@ -21,10 +21,6 @@ public class CameraController : MonoBehaviour
         initialPosition = mainCamera.transform.position; // Store the initial position of the camera
         cameraDistance = mainCamera.transform.position.z; // Get the initial camera distance
 
-        // print out camera distance
-        Debug.Log("Camera distance: " + cameraDistance);
-
-
         asymFrustum = FindObjectOfType<AsymFrustum>();
         if (asymFrustum == null)
         {
