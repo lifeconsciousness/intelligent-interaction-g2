@@ -20,6 +20,11 @@ public class CameraController : MonoBehaviour
         mainCamera = FindObjectOfType<Camera>();
         initialPosition = mainCamera.transform.position; // Store the initial position of the camera
         cameraDistance = mainCamera.transform.position.z; // Get the initial camera distance
+
+        // print out camera distance
+        Debug.Log("Camera distance: " + cameraDistance);
+
+
         asymFrustum = FindObjectOfType<AsymFrustum>();
         if (asymFrustum == null)
         {
@@ -63,6 +68,8 @@ public class CameraController : MonoBehaviour
 
         // Calculate the target position in world space
         targetPosition = initialPosition + new Vector3(mappedX, mappedY, cameraDistance);
+
+        targetPosition.z = cameraDistance; // Ensure the camera distance is maintained
 
         // Smoothly move to the target position
         mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, targetPosition, ref currentVelocity, smoothTime);

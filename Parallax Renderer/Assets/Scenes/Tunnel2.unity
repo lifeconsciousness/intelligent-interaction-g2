@@ -2532,6 +2532,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5199221760511910078, guid: b60335693db0f5dc698f2405a232fc52, type: 3}
+      propertyPath: m_MinValue
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5332761425516458786, guid: b60335693db0f5dc698f2405a232fc52, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.99263245
@@ -2576,6 +2580,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7916109728103665129, guid: b60335693db0f5dc698f2405a232fc52, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2601,6 +2609,14 @@ PrefabInstance:
       propertyPath: distanceSlider
       value: 
       objectReference: {fileID: 1437922926}
+    - target: {fileID: 3731627460600802689, guid: 0a40b0eb6ec06c77e8645eb8221384c9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731627460600802689, guid: 0a40b0eb6ec06c77e8645eb8221384c9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4629201026508248474, guid: 0a40b0eb6ec06c77e8645eb8221384c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

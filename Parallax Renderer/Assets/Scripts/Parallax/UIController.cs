@@ -34,7 +34,7 @@ public class UIController : MonoBehaviour
         {
             distanceSlider.value = -cameraDistance; // Set the slider to the current camera distance
             distanceSlider.onValueChanged.AddListener(OnSliderValueChanged);
-            distanceSlider.minValue = -asymFrustum.virtualWindow.transform.position.z + FindObjectOfType<Camera>().transform.position.z + 0.3f;
+            distanceSlider.minValue = 0.3f;
         }
 
         if (resetButton != null)
