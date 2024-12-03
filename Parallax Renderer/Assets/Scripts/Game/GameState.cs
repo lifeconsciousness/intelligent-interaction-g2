@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // Preserve this object across scenes
     }
 
     void Update()
