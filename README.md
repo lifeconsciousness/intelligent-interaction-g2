@@ -30,12 +30,6 @@ To process an image with Haarcascade or Mediapipe, use the following commands:
 **Haarcascade:**
 
 ```bash
-docker run --rm \
-  eye-tracking-app \
-  --haarcascade
-```
-
-```bash
 python3 app.py --haarcascade
 ```
 
@@ -43,8 +37,9 @@ python3 app.py --haarcascade
 
 ```bash
 docker run --rm \
-  eye-tracking-app \
-  --mediapipe
+ --net=host \
+ --privileged \
+ eye-tracking-app
 ```
 
 ```bash
@@ -57,27 +52,11 @@ If you want to use real-time video tracking (e.g., via webcam), add the --video 
 **Haarcascade with Videos:**
 
 ```bash
-docker run --rm \
-  --device=/dev/video0:/dev/video0 \
-  eye-tracking-app \
-  --haarcascade --video
-```
-
-```bash
 python3 app.py --haarcascade --video
 ```
 
 **Mediapipe with Video:**
 
 ```bash
-docker run --rm \
-  --device=/dev/video0:/dev/video0 \
-  eye-tracking-app \
-  --mediapipe --video
-```
-
-```bash
 python3 app.py --mediapipe --video
 ```
-
-

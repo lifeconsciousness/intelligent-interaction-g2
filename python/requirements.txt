@@ -1,4 +1,4 @@
-mediapipe==0.10.18
+mediapipe==0.10.15
 opencv_contrib_python==4.10.0.84
 opencv_python==4.10.0.84
 opencv_python_headless==4.10.0.84
