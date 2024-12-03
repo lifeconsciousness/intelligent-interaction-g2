@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraDistance: 0
   smoothTime: 0.5
+  initialPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &3025354056627492733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ GameObject:
   - component: {fileID: 6228863118324858680}
   - component: {fileID: 7692799389252460725}
   - component: {fileID: 1180504356978782846}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
