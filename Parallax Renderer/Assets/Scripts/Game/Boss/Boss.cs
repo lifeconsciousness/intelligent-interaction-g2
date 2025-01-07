@@ -54,7 +54,9 @@ public class Boss : MonoBehaviour
             RotateCircular();
         }
 
-        MoveZAxis(1.5f);
+        MoveZAxis(10f, 1f, 4f);
+
+        RandomMovement();
 
         // switch (currentBehavior)
         // {
@@ -71,35 +73,51 @@ public class Boss : MonoBehaviour
         // }
     }
 
-    // void MoveZAxis()
-    // {
-    //     float newZ = Mathf.Sin(Time.time * zMoveSpeed) * zMoveDistance;
-    //     transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
-    // }
 
-    void MoveZAxis(float pauseDuration)
+    private float initialZ; // Stores the starting Z position
+    private float movementStartTime; 
+
+    void MoveZAxis(float zMoveDistance, float zMoveSpeed, float pauseDuration)
     {
-        // Calculate position based on time
-        float cycleTime = Time.time % (zMoveSpeed * 2 + pauseDuration * 2); // Full cycle: forward, pause, backward, pause
-        if (cycleTime < zMoveSpeed) // Moving forward
+        // Initialize starting position and time if needed
+        if (movementStartTime == 0f)
         {
-            float newZ = Mathf.Lerp(-zMoveDistance, zMoveDistance, cycleTime / zMoveSpeed);
+            initialZ = transform.position.z; // Store the current Z position
+            movementStartTime = Time.time;  // Start time of the movement
+        }
+
+        // Calculate the total cycle duration
+        float cycleDuration = 2 * zMoveSpeed + 2 * pauseDuration;
+
+        // Calculate elapsed time since the movement started
+        float elapsedTime = (Time.time - movementStartTime) % cycleDuration;
+
+        float forwardZ = initialZ + zMoveDistance;
+        float backwardZ = initialZ - zMoveDistance;
+
+        // Determine phase of movement within the cycle
+        if (elapsedTime < zMoveSpeed) // Moving forward
+        {
+            float t = elapsedTime / zMoveSpeed;
+            float newZ = Mathf.Lerp(backwardZ, forwardZ, t);
             transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         }
-        else if (cycleTime < zMoveSpeed + pauseDuration) // Pause after moving forward
+        else if (elapsedTime < zMoveSpeed + pauseDuration) // Pausing at forward end
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, zMoveDistance);
+            transform.position = new Vector3(transform.position.x, transform.position.y, forwardZ);
         }
-        else if (cycleTime < zMoveSpeed * 2 + pauseDuration) // Moving backward
+        else if (elapsedTime < zMoveSpeed * 2 + pauseDuration) // Moving backward
         {
-            float newZ = Mathf.Lerp(zMoveDistance, -zMoveDistance, (cycleTime - zMoveSpeed - pauseDuration) / zMoveSpeed);
+            float t = (elapsedTime - zMoveSpeed - pauseDuration) / zMoveSpeed;
+            float newZ = Mathf.Lerp(forwardZ, backwardZ, t);
             transform.position = new Vector3(transform.position.x, transform.position.y, newZ);
         }
-        else // Pause after moving backward
+        else // Pausing at backward end
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, -zMoveDistance);
+            transform.position = new Vector3(transform.position.x, transform.position.y, backwardZ);
         }
     }
+
 
 
     void RandomMovement()

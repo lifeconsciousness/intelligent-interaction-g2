@@ -81,3 +81,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f039f0a4f24694e38bb93d861df1ffbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hoverAmplitude: 0.5
+  hoverSpeed: 2
+  rotationRadius: 1
+  rotationSpeed: 2
+  zMoveDistance: 10
+  zMoveSpeed: 1
+  randomMoveSpeed: 1
+  randomMoveDuration: 2
+  xBoundary: 0
+  yBoundary: 0
+  behaviorSwitchInterval: 5
