@@ -1,0 +1,12 @@
+# Blender MTL File: 'Jellyfish.blend'
+# Material Count: 1
+
+newmtl Jellyfish
+Ns 37.254902
+Ka 0.000000 0.000000 0.000000
+Kd 0.730461 0.223228 0.417885
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Jellyfish.png
