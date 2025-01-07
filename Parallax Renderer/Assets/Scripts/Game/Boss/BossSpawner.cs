@@ -26,9 +26,11 @@ public class BossSpawner : MonoBehaviour
         }
 
         initialPosition = cameraController.initialPosition;
+
+        SpawnBoss();
     }
 
-    void SpawnWall()
+    void SpawnBoss()
     {
         // Define wall spawn position similar to objects or in a specific pattern
         float randomX = initialPosition.x; // Centered on X; adjust as needed
@@ -59,6 +61,6 @@ public class BossSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
