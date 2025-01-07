@@ -49,10 +49,6 @@ def mediapipe():
         frame_latency = frame_end_time - frame_start_time
         latencies.append(frame_latency)
 
-        if len(latencies) > 1:
-            jitter = abs(latencies[-1] - latencies[-2])
-            jitter_list.append(jitter)
-
         frame_count += 1
 
         cv2.imshow('Eye Tracking Metrics', frame)
