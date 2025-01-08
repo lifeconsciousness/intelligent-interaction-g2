@@ -10,15 +10,14 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        // Enforce Singleton pattern
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Persist across scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // Ensure only one GameManager exists
+            Destroy(gameObject);
         }
     }
 
