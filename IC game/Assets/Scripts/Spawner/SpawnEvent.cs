@@ -6,7 +6,7 @@ public class SpawnEvent
     public float spawnTime; // Time in seconds when this event should trigger
     public GameObject enemyPrefab; // Enemy prefab to spawn
 
-    public bool useCoordinates = true; // If true, use x, y, z coordinates instead of a Transform
+    public bool useCoordinates = false; // If true, use x, y, z coordinates instead of a Transform
 
     public Transform spawnLocation; // Exact location to spawn the enemy (used if useCoordinates is false)
     public Vector3 spawnCoordinates; // Coordinates to spawn the enemy (used if useCoordinates is true)
