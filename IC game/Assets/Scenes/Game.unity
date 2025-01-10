@@ -545,7 +545,7 @@ PrefabInstance:
       objectReference: {fileID: 336078189659523177, guid: 5c032f6fe41cd4895b8e41706b150a5a, type: 3}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].spawnInterval
-      value: 0.1
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].spawnInterval
@@ -573,7 +573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].spawnCoordinates.z
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].spawnCoordinates.z
@@ -942,6 +942,10 @@ PrefabInstance:
     - target: {fileID: 7030618884951266954, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8932689054211394370, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
+      propertyPath: smoothTime
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

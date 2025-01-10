@@ -689,7 +689,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &452968341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1897,7 +1897,7 @@ MonoBehaviour:
   wallSpeed: 15
   wallDestructionDistance: -50
   spawnRotation: {x: 0, y: 0, z: 0, w: 1}
-  spawnDistance: -100
+  spawnDistance: 100
   wallVariants:
   - {fileID: 7797716109384343499, guid: 4561b08afc5ce6dd68ce592e9f548eec, type: 3}
   - {fileID: 7395969213321686391, guid: db768408d104cf04b87e50b0171b4f1d, type: 3}
