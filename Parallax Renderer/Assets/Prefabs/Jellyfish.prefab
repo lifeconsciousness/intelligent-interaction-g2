@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.55
+      value: 1.92
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.749671
+      value: -1.39
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.34
+      value: -5.63
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
       propertyPath: m_LocalRotation.w
@@ -63,6 +63,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7213269502933696278}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1135108682265538586}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2510002067319005962}
   m_SourcePrefab: {fileID: 100100000, guid: 337746ec6ceca4a9992af1ee332b91ff, type: 3}
 --- !u!1 &6740706022950715833 stripped
 GameObject:
@@ -81,14 +87,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f039f0a4f24694e38bb93d861df1ffbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverAmplitude: 0.5
-  hoverSpeed: 2
-  rotationRadius: 1
+  xBoundary: 7
+  yBoundary: 7
+  speed: 2
+  isRotating: 1
   rotationSpeed: 2
-  zMoveDistance: 10
-  zMoveSpeed: 1
-  randomMoveSpeed: 1
-  randomMoveDuration: 2
-  xBoundary: 0
-  yBoundary: 0
-  behaviorSwitchInterval: 5
+  rotationRadius: 1
+  hoverSpeed: 2
+  hoverAmplitude: 0.5
+--- !u!114 &1135108682265538586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6740706022950715833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cab02835acc445c780aae70935f2a2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+--- !u!114 &2510002067319005962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6740706022950715833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79ef2dbaa5b784627b54f70c3fb4a494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
