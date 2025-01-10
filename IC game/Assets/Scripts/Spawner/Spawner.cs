@@ -6,6 +6,7 @@ public class Spawner : MonoBehaviour
     public List<SpawnEvent> spawnEvents = new List<SpawnEvent>();
     private float gameTimer = 0f;
     private int nextEventIndex = 0;
+    private bool isCoroutineRunning = false;
 
     void Start()
     {
@@ -18,8 +19,14 @@ public class Spawner : MonoBehaviour
 
         while (nextEventIndex < spawnEvents.Count && gameTimer >= spawnEvents[nextEventIndex].spawnTime)
         {
+            isCoroutineRunning = true;
             StartCoroutine(SpawnEnemies(spawnEvents[nextEventIndex]));
             nextEventIndex++;
+        }
+
+        if (nextEventIndex >= spawnEvents.Count && !isCoroutineRunning)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -65,6 +72,7 @@ public class Spawner : MonoBehaviour
                 yield return null;
             }
         }
+        isCoroutineRunning = false;
     }
 
     private Vector3 GetRandomPositionInArea(Vector3 center, Vector3 size)
