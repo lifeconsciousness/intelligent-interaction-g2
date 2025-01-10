@@ -12,9 +12,13 @@ public class SimpleEnemy : Enemy
             Plane movementPlane = new Plane(planeNormal, planePoint);
             float distanceToPlane = movementPlane.GetDistanceToPoint(transform.position);
 
-            Vector3 projectedPosition = transform.position - planeNormal * distanceToPlane;
+            if (distanceToPlane > 0)
+            {
+                Vector3 projectedPosition = transform.position - planeNormal * distanceToPlane;
 
-            moveDirection = (projectedPosition - transform.position).normalized;
+                moveDirection = (projectedPosition - transform.position).normalized;
+            }
+
 
             transform.position += moveDirection * speed * Time.deltaTime;
             transform.forward = moveDirection;
