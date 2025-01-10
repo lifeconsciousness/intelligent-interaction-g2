@@ -79,7 +79,7 @@ public class Spawner : MonoBehaviour
     {
         Vector3 randomPos = new Vector3(
             Random.Range(center.x - size.x / 2f, center.x + size.x / 2f),
-            center.y,
+            Random.Range(center.y - size.y / 2f, center.y + size.y / 2f),
             Random.Range(center.z - size.z / 2f, center.z + size.z / 2f)
         );
         return randomPos;

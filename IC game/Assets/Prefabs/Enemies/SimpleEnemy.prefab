@@ -122,6 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  speed: 5
+  speed: 30
   distanceThreshold: 0.1
   timeAfterPlane: 2
+  damageCooldownTime: 2
+  damage: 10
