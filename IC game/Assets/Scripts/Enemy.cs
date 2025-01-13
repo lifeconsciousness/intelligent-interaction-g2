@@ -20,8 +20,12 @@ public abstract class Enemy : MonoBehaviour
 
     public int damage = 10; // Damage dealt to the player on collision
 
+    public Vector3 originalPosition;
+    
+
     protected virtual void Start()
     {
+        originalPosition = transform.position;
         gameManager = GameManager.Instance;
         if (gameManager == null)
         {
