@@ -25,7 +25,6 @@ class Haarcascade(EyeTracker):
         parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         sys.path.append(parent_dir)
         from eye_trackers.eyetracking_haarcascade import EyeTrackingHaarcascade
-
         self.tracker = EyeTrackingHaarcascade()
 
     def eye_tracking(self, frame):
