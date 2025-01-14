@@ -42,9 +42,5 @@ class EyeTrackingHaarcascade(EyeTrackerInterface):
                     distance=self.distance,
                     eye_rect=self.eye_rect
                 )
-        return EyeTrackingResult(
-            x=self.x_position,
-            y=self.y_position,
-            distance=self.distance,
-            eye_rect=self.eye_rect
-        )
+            return None
+        return None
