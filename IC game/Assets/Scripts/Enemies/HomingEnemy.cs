@@ -2,38 +2,43 @@ using UnityEngine;
 
 public class HomingEnemy : Enemy
 {
-    public float homingStrength = 0.5f; // How strongly the projectile adjusts toward the player
+    public float homingStrength = 0.1f; // Adjust this value to control the steering strength
 
     protected override void Move()
     {
-        // Always calculate the direction toward the player
-        Vector3 targetDirection = (player.position - transform.position).normalized;
-
         if (!hasReachedPlane)
         {
-            // Interpolate between the current move direction and the target direction
-            moveDirection = Vector3.Lerp(moveDirection, targetDirection, homingStrength * Time.deltaTime).normalized;
+            Vector3 planeNormal = player.forward;
+            Vector3 planePoint = player.position;
 
-            // Move the enemy
+            Plane movementPlane = new Plane(planeNormal, planePoint);
+            float distanceToPlane = movementPlane.GetDistanceToPoint(transform.position);
+
+            if (distanceToPlane > 0)
+            {
+                Vector3 directionToPlayer = (player.position - transform.position).normalized;
+                moveDirection = Vector3.Lerp(moveDirection, directionToPlayer, homingStrength).normalized;
+            }
+            else
+            {
+                hasReachedPlane = true;
+            }
+
             transform.position += moveDirection * speed * Time.deltaTime;
-            transform.forward = moveDirection;
 
-            // Optionally remove the hasReachedPlane check if it's no longer needed
+            if (moveDirection != Vector3.zero)
+            {
+                transform.forward = moveDirection;
+            }
         }
         else
         {
-            // Continue moving in the same direction after reaching the \"plane\"
             transform.position += moveDirection * speed * Time.deltaTime;
-            transform.forward = moveDirection;
-        }
-    }
 
-    protected override void onPlayerCollision()
-    {
-        // Ensure collision only happens when the colliders physically intersect
-        if (playerCollider.bounds.Intersects(enemyCollider.bounds))
-        {
-            base.onPlayerCollision();
+            if (moveDirection != Vector3.zero)
+            {
+                transform.forward = moveDirection;
+            }
         }
     }
 }

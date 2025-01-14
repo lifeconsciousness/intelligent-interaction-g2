@@ -130,4 +130,4 @@ MonoBehaviour:
   damageCooldownTime: 2
   damage: 10
   originalPosition: {x: 0, y: 0, z: 0}
-  homingStrength: 0
+  homingStrength: 0.001

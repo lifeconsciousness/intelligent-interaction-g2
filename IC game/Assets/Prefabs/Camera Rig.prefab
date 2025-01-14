@@ -44,8 +44,9 @@ GameObject:
   - component: {fileID: 580645190222333770}
   - component: {fileID: 4071758880091166634}
   - component: {fileID: 2665491452696178200}
+  - component: {fileID: 6745917226916487059}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Player
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,6 +187,27 @@ MonoBehaviour:
   height: 9
   maxHeight: 2000
   verbose: 0
+--- !u!135 &6745917226916487059
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6849028341067661404}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7030618884951266954
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,11 +217,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2425744582169823015}
-  - component: {fileID: 559827615846430260}
   - component: {fileID: 5725109676019891356}
   - component: {fileID: 8932689054211394370}
   m_Layer: 0
-  m_Name: CameraRig
+  m_Name: Camera Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,27 +243,6 @@ Transform:
   - {fileID: 3658800622678145257}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &559827615846430260
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7030618884951266954}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5725109676019891356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d146b2f50dee646985972dda116cbd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   coordinates:
     x: 0
     y: 0
@@ -279,5 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraDistance: 0
-  smoothTime: 0.5
+  smoothTime: 0.7
+  keyboardSpeed: 5
   initialPosition: {x: 0, y: 0, z: 0}
