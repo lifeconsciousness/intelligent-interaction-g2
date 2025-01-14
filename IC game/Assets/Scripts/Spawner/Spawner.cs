@@ -7,6 +7,7 @@ public class Spawner : MonoBehaviour
     private float gameTimer = 0f;
     private int nextEventIndex = 0;
     private bool isCoroutineRunning = false;
+    public bool repeat = false;
 
     void Start()
     {
@@ -26,6 +27,13 @@ public class Spawner : MonoBehaviour
 
         if (nextEventIndex >= spawnEvents.Count && !isCoroutineRunning)
         {
+            if (repeat)
+            {
+                gameTimer = 0f;
+                nextEventIndex = 0;
+                return;
+            }
+
             Destroy(gameObject);
         }
     }
