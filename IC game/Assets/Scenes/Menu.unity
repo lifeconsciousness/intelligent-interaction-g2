@@ -2037,6 +2037,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StartText: {fileID: 1923555831}
+  gameScene: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
 --- !u!1 &1308107982
 GameObject:
   m_ObjectHideFlags: 0
