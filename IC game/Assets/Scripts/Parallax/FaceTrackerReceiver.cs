@@ -49,7 +49,6 @@ public class FaceTrackerReceiver : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Optional: keeps the object between scenes
         }
         else
         {
