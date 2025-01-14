@@ -1,9 +1,11 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
     public Transform StartText;
+    public SceneAsset gameScene;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +27,7 @@ public class MenuController : MonoBehaviour
             {
                 if(hit.transform == StartText) {
                     // switch scene to game scene
-                    SceneManager.LoadScene("game");
+                    SceneManager.LoadScene(gameScene.name);
                 }
             }
         }
