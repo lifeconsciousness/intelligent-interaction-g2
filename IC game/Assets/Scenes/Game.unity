@@ -682,7 +682,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].quantity
@@ -694,7 +694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].spawnTime
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].visualize
@@ -913,7 +913,7 @@ Transform:
   m_GameObject: {fileID: 2139883057}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.08, z: 25.69}
+  m_LocalPosition: {x: 0, y: -3.08, z: 28.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

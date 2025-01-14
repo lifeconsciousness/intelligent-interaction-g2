@@ -8,6 +8,7 @@ public class FaceTrackerReceiver : MonoBehaviour
     private static FaceTrackerReceiver instance;
     private UdpClient udpClient;
     private IPEndPoint remoteEndPoint;
+    public bool isActive = false;
 
     [System.Serializable]
     public class FaceCoordinates
@@ -49,6 +50,7 @@ public class FaceTrackerReceiver : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // Optional: keeps the object between scenes
         }
         else
         {
@@ -68,6 +70,7 @@ public class FaceTrackerReceiver : MonoBehaviour
     {
         if (udpClient.Available > 0)
         {
+            isActive = true;
             byte[] data = udpClient.Receive(ref remoteEndPoint);
             string json = System.Text.Encoding.UTF8.GetString(data);
             FaceCoordinates receivedCoordinates = JsonUtility.FromJson<FaceCoordinates>(json);
@@ -79,7 +82,7 @@ public class FaceTrackerReceiver : MonoBehaviour
 
             // Update min/max values based on the received coordinates
             UpdateMinMaxValues();
-        }
+        } 
 
         // Check for 'R' key press to reset position
         if (Input.GetKeyDown(KeyCode.R))

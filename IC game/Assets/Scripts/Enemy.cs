@@ -12,8 +12,8 @@ public abstract class Enemy : MonoBehaviour
     protected float timer = 0f; // Timer after reaching the plane
     protected Vector3 moveDirection; // Current movement direction
 
-    private Collider playerCollider;
-    private Collider enemyCollider;
+    protected Collider playerCollider;
+    protected Collider enemyCollider;
     private GameManager gameManager;
     
     private float damageCooldown = 0f; // Cooldown between damage ticks

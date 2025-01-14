@@ -6,14 +6,21 @@ public class CameraController : MonoBehaviour
     private AsymFrustum asymFrustum; // Reference to the AsymFrustum script
     private FaceTrackerReceiver faceTracker;
     public float cameraDistance;
-
+ 
     // Smoothing parameters
     public float smoothTime = 0.3f; // Time to smooth to the target position
     private Vector3 targetPosition; // The target position the camera should move towards
     private Vector3 currentVelocity = Vector3.zero; // Current velocity for smooth dampening
 
+    public float keyboardSpeed = 5.0f;  
+
     public Vector3 initialPosition;
     private Camera mainCamera;
+
+     private float virtualMinX;
+    private float virtualMaxX;
+    private float virtualMinY;
+    private float virtualMaxY;
 
     void Start()
     {
@@ -38,6 +45,29 @@ public class CameraController : MonoBehaviour
     {
         if (asymFrustum == null || faceTracker == null)
         {
+            return;
+        }
+
+        virtualMinX = -asymFrustum.width / 2;
+        virtualMaxX = asymFrustum.width / 2;
+        virtualMinY = -asymFrustum.height / 2;
+        virtualMaxY = asymFrustum.height / 2;
+
+        // when the face tracker is not active use keyboard input to move the camera instead also only move inside the virtual boundaries
+        if (!faceTracker.isActive)
+        {
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            Vector3 move = new Vector3(horizontal, vertical, 0) * keyboardSpeed * Time.deltaTime;
+            Vector3 newPosition = mainCamera.transform.position + move;
+
+            // Clamp the camera position to the virtual boundaries
+            newPosition.x = Mathf.Clamp(newPosition.x, virtualMinX, virtualMaxX);
+            newPosition.y = Mathf.Clamp(newPosition.y, virtualMinY, virtualMaxY);
+
+            mainCamera.transform.position = newPosition;
+
             return;
         }
 
