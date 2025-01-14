@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &275113283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 336078189659523177, guid: 5c032f6fe41cd4895b8e41706b150a5a, type: 3}
+  m_PrefabInstance: {fileID: 1251143550}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &390025366
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,7 +478,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 336078189659523177, guid: 5c032f6fe41cd4895b8e41706b150a5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1512830973}
   m_SourcePrefab: {fileID: 100100000, guid: 5c032f6fe41cd4895b8e41706b150a5a, type: 3}
 --- !u!1001 &1266941330
 PrefabInstance:
@@ -637,6 +645,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1144527805692367571, guid: 5c032f6fe41cd4895b8e41706b150a5a, type: 3}
   m_PrefabInstance: {fileID: 1251143550}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &1512830973
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275113283}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 157822d3ab15f4f6fbde5e9f0b6a2ece, type: 3}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1907601990 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2425744582169823015, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
@@ -705,7 +735,7 @@ PrefabInstance:
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].enemyPrefab
       value: 
-      objectReference: {fileID: 1617048064070404406, guid: 969160c74758b0455a34f9d6c23be6bf, type: 3}
+      objectReference: {fileID: 3113979297617189026, guid: 5b2027fc799824c6fbfea47908c0ee38, type: 3}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].enemyPrefab
       value: 
@@ -942,6 +972,10 @@ PrefabInstance:
     - target: {fileID: 7030618884951266954, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8932689054211394370, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8932689054211394370, guid: c23c95e59e45964118310f146ae7d3d3, type: 3}
       propertyPath: smoothTime
