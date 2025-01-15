@@ -155,8 +155,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: repeat
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: limitedRepeat
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: repeatDuration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: destoryOverride
+      value: 
+      objectReference: {fileID: 7602419664779441095}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.size
       value: 1

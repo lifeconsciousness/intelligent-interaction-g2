@@ -300,12 +300,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: repeat
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].quantity
-      value: 3000
+      value: 999999999
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].quantity
@@ -321,7 +325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].spawnTime
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].visualize
@@ -329,11 +333,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].areaSize.x
-      value: 16.4
+      value: 24.37
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].areaSize.y
-      value: 8.97
+      value: 17.3
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].areaSize.z
@@ -360,8 +364,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7602419664779441095, guid: 75d9506eb855920d5beb333985bad7c7, type: 3}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: spawnEvents.Array.data[0].limitedRepeat
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[0].spawnInterval
-      value: 0.1
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
+      propertyPath: spawnEvents.Array.data[1].limitedRepeat
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2832215122893320218, guid: 1016afa436bb1493bb9f566e01cac6cf, type: 3}
       propertyPath: spawnEvents.Array.data[1].spawnInterval

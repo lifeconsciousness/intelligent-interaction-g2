@@ -8,6 +8,10 @@ public class Spawner : MonoBehaviour
     private int nextEventIndex = 0;
     private bool isCoroutineRunning = false;
     public bool repeat = false;
+    public bool limitedRepeat = false;
+    public float repeatDuration = 10f;
+
+    public GameObject destoryOverride;
 
     void Start()
     {
@@ -33,6 +37,16 @@ public class Spawner : MonoBehaviour
                 gameTimer = 0f;
                 nextEventIndex = 0;
                 return;
+            } else if (limitedRepeat && gameTimer <= repeatDuration)
+            {
+                gameTimer = 0f;
+                nextEventIndex = 0;
+                return;
+            }
+
+            if (destoryOverride != null)
+            {
+                Destroy(destoryOverride);
             }
 
             Destroy(gameObject);
