@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour
         if (PlayerHealth <= 0) {
             PlayerHealth = 0;
             // Handle player death
+            SceneManager.LoadScene("Menu");
             Debug.Log("Player has died!");
         }
 

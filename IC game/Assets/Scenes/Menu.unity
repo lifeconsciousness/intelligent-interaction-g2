@@ -1191,7 +1191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &678430287
 Transform:
   m_ObjectHideFlags: 0
@@ -1517,6 +1517,10 @@ PrefabInstance:
     - target: {fileID: 7030618884951266954, guid: f7f76103f5798d60b899e600fc4aafc8, type: 3}
       propertyPath: m_Name
       value: Camera Rig
+      objectReference: {fileID: 0}
+    - target: {fileID: 8932689054211394370, guid: f7f76103f5798d60b899e600fc4aafc8, type: 3}
+      propertyPath: smoothTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4537,7 +4541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1778115257
 Transform:
   m_ObjectHideFlags: 0
