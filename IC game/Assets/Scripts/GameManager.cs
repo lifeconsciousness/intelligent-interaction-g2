@@ -8,6 +8,13 @@ public class GameManager : MonoBehaviour
     public float GameTime { get; private set; } = 0f; // Total game time passed
     public int PlayerHealth { get; private set; } = 100; // Player health
 
+    // UI elements
+    public TMPro.TextMeshProUGUI HealthText;
+
+    // Damage cooldown
+    public float damageCooldown = 1f;
+    private float lastDamageTime = -999f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,6 +26,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (HealthText == null) {
+            Debug.LogError("HealthText is not set in the GameManager!");
+        }
+        HealthText.SetText("Health: " + PlayerHealth);
     }
 
     private void Update()
@@ -28,17 +40,19 @@ public class GameManager : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        PlayerHealth -= damage;
-        if (PlayerHealth < 0)
-            PlayerHealth = 0;
+        if (Time.time - lastDamageTime < damageCooldown)
+            return;
 
-        if (PlayerHealth == 0)
-        {
+        lastDamageTime = Time.time;
+
+        PlayerHealth -= damage;
+        if (PlayerHealth <= 0) {
+            PlayerHealth = 0;
             // Handle player death
             Debug.Log("Player has died!");
         }
 
-        Debug.Log("Player health: " + PlayerHealth);
+        HealthText.SetText("Health: " + PlayerHealth);
     }
 
     public void Heal(int amount)
@@ -46,5 +60,7 @@ public class GameManager : MonoBehaviour
         PlayerHealth += amount;
         if (PlayerHealth > 100)
             PlayerHealth = 100;
+
+        HealthText.SetText("Health: " + PlayerHealth);
     }
 }
