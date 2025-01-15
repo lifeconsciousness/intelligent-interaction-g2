@@ -40,7 +40,7 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
                 if socket_client is not None:
                     socket_client.send_data((x, y, distance))
 
-                if results.eye_rect is not None and args.video:
+                if results is not None and results.eye_rect is not None and args.video:
                     x_rect, y_rect, w_rect, h_rect = results.eye_rect
                     cv2.rectangle(image, (int(x_rect), int(y_rect)), (int(x_rect + w_rect), int(y_rect + h_rect)), (255, 0, 0), 2)
 
