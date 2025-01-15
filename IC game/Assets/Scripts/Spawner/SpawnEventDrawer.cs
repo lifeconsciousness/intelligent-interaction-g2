@@ -52,6 +52,11 @@ public class SpawnEventDrawer : PropertyDrawer
         SerializedProperty areaSizeProp = property.FindPropertyRelative("areaSize");
         SerializedProperty spawnIntervalProp = property.FindPropertyRelative("spawnInterval");
         SerializedProperty visualizeProp = property.FindPropertyRelative("visualize");
+        SerializedProperty disableProp = property.FindPropertyRelative("disable");
+
+        // Draw Disable
+        EditorGUI.PropertyField(currentRect, disableProp);
+        currentRect.y += lineHeight + fieldSpacing;
 
         // Draw Spawn Time
         EditorGUI.PropertyField(currentRect, spawnTimeProp);

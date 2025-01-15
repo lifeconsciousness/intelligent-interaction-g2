@@ -6,12 +6,13 @@ public class CameraController : MonoBehaviour
     private AsymFrustum asymFrustum; // Reference to the AsymFrustum script
     private FaceTrackerReceiver faceTracker;
     public float cameraDistance;
-    public float keyboardSpeed = 5.0f;
 
     // Smoothing parameters
     public float smoothTime = 0.3f; // Time to smooth to the target position
     private Vector3 targetPosition; // The target position the camera should move towards
     private Vector3 currentVelocity = Vector3.zero; // Current velocity for smooth dampening
+
+    public float keyboardSpeed = 5.0f;
 
     public Vector3 initialPosition;
     private Camera mainCamera;
@@ -33,6 +34,11 @@ public class CameraController : MonoBehaviour
             Debug.LogError("AsymFrustum reference is not set. Please assign it in the Inspector.");
         }
 
+        virtualMinX = -asymFrustum.width / 2;
+        virtualMaxX = asymFrustum.width / 2;
+        virtualMinY = -asymFrustum.height / 2;
+        virtualMaxY = asymFrustum.height / 2;
+
         faceTracker = FaceTrackerReceiver.Instance;
         if (faceTracker == null)
         {
@@ -46,11 +52,6 @@ public class CameraController : MonoBehaviour
         {
             return;
         }
-
-        virtualMinX = -asymFrustum.width / 2;
-        virtualMaxX = asymFrustum.width / 2;
-        virtualMinY = -asymFrustum.height / 2;
-        virtualMaxY = asymFrustum.height / 2;
 
         // when the face tracker is not active use keyboard input to move the camera instead also only move inside the virtual boundaries
         if (!faceTracker.isActive)
@@ -90,6 +91,9 @@ public class CameraController : MonoBehaviour
 
         targetPosition.z = cameraDistance; // Ensure the camera distance is maintained
 
+        targetPosition.x = Mathf.Clamp(targetPosition.x, virtualMinX, virtualMaxX);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, virtualMinY, virtualMaxY);
+
         // Smoothly move to the target position
         mainCamera.transform.position = Vector3.SmoothDamp(mainCamera.transform.position, targetPosition, ref currentVelocity, smoothTime);
     }
@@ -99,7 +103,7 @@ public class CameraController : MonoBehaviour
         // Handle cases where realMax equals realMin to avoid division by zero
         if (realMax == realMin)
         {
-            return virtualMin; // Or handle it in a way that suits your application
+            return (virtualMin + virtualMax) / 2;
         }
 
         // Normalize the value to the range [0, 1]

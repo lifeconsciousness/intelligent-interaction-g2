@@ -25,14 +25,16 @@ class Haarcascade(EyeTracker):
         parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         sys.path.append(parent_dir)
         from eye_trackers.eyetracking_haarcascade import EyeTrackingHaarcascade
-
         self.tracker = EyeTrackingHaarcascade()
 
     def eye_tracking(self, frame):
         return self.tracker.eye_tracking(frame)
 
-def run(tracker : EyeTracker):
-    cap = cv2.VideoCapture(0)
+def run(tracker : EyeTracker, video = None):
+    if video:
+        cap = cv2.VideoCapture(video)
+    else:
+        cap = cv2.VideoCapture(0)
     frame_count = 0
     start_time = time.time()
     latencies = []
@@ -70,6 +72,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--mediapipe", action="store_true", help="Use mediapipe for eye tracking")
     parser.add_argument("--haarcascade", action="store_true", help="Use haarcascade for eye tracking")
+    parser.add_argument("--video", type=str, help="Use a video file for eye tracking")
     args = parser.parse_args()
 
     if args.mediapipe:
@@ -80,7 +83,7 @@ if __name__ == "__main__":
         print("Error: Please specify an eye tracker to use.")
         exit(1)
 
-    frame_count, latencies, missed_frames, start_time = run(tracker)
+    frame_count, latencies, missed_frames, start_time = run(tracker, args.video)
 
     from display_metrics import display_metrics, Metrics
 

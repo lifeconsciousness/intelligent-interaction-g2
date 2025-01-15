@@ -40,8 +40,7 @@ class EyeTrackingMediapipe(EyeTrackerInterface):
                 self.landmarks = face_landmarks.landmark
                 x_right_eye, y_right_eye, right_eye_width, right_eye_height = self.get_right_eye_rect(image)
                 distance = self.calculate_distance(right_eye_width)
-
-                
+   
                 self.x_position = x_right_eye + right_eye_width / 2
                 self.y_position = y_right_eye + right_eye_height / 2
                 self.distance = distance
@@ -55,9 +54,4 @@ class EyeTrackingMediapipe(EyeTrackerInterface):
                     eye_rect=self.eye_rect
                 )
         else:
-            return EyeTrackingResult(
-                x=self.x_position,
-                y=self.y_position,
-                distance=self.distance,
-                eye_rect=self.eye_rect
-            )
+            return None

@@ -8,17 +8,14 @@ from socket_client.socketClient import SocketClient
 from argparse import ArgumentParser
 import threading
 
-parser = ArgumentParser()
-
-parser.add_argument("--mediapipe", action="store_true", help="Use mediapipe for eye tracking")
-parser.add_argument("--haarcascade", action="store_true", help="Use haarcascade for eye tracking")
-parser.add_argument("--video", action="store_true", help="Display Eye Tracking on video")
-parser.add_argument("--verbose", action="store_true", help="Display verbose output")
-args = parser.parse_args()
-
 def main(eye_tracking: EyeTrackerInterface, socket_client = None):
     tracking_thread = threading.Thread(target=eye_tracking.eye_tracking)
     tracking_thread.start()
+    
+    x = 0
+    y = 0
+    distance = 0
+    
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
         print("Error: Unable to open camera.")
@@ -31,9 +28,11 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
                     continue
 
                 results = eye_tracking.eye_tracking(image)
-                x = results.x
-                y = results.y
-                distance = results.distance
+                
+                if results is not None:
+                    x = results.x
+                    y = results.y
+                    distance = results.distance
 
                 if args.verbose:
                     print(f"X: {x}, Y: {y}, Distance: {distance:.2f}")
@@ -41,7 +40,7 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
                 if socket_client is not None:
                     socket_client.send_data((x, y, distance))
 
-                if results.eye_rect is not None and args.video:
+                if results is not None and results.eye_rect is not None and args.video:
                     x_rect, y_rect, w_rect, h_rect = results.eye_rect
                     cv2.rectangle(image, (int(x_rect), int(y_rect)), (int(x_rect + w_rect), int(y_rect + h_rect)), (255, 0, 0), 2)
 
@@ -60,6 +59,15 @@ def main(eye_tracking: EyeTrackerInterface, socket_client = None):
             cv2.destroyAllWindows()
 
 if __name__ == "__main__":
+    
+    parser = ArgumentParser()
+
+    parser.add_argument("--mediapipe", action="store_true", help="Use mediapipe for eye tracking")
+    parser.add_argument("--haarcascade", action="store_true", help="Use haarcascade for eye tracking")
+    parser.add_argument("--video", action="store_true", help="Display Eye Tracking on video")
+    parser.add_argument("--verbose", action="store_true", help="Display verbose output")
+    args = parser.parse_args()
+    
     eye_tracking: EyeTrackerInterface = None
     if args.mediapipe:
         eye_tracking = EyeTrackingMediapipe()

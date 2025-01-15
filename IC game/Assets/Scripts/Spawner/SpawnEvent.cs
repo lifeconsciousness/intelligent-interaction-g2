@@ -19,4 +19,6 @@ public class SpawnEvent
     public float spawnInterval = 0f; // Interval between spawns in the wave
 
     public bool visualize = false; // Whether to show spawn location gizmos for this event
+
+    public bool disable  = false; // Whether to disable this event for testing purposes
 }

@@ -12,16 +12,20 @@ public abstract class Enemy : MonoBehaviour
     protected float timer = 0f; // Timer after reaching the plane
     protected Vector3 moveDirection; // Current movement direction
 
-    private Collider playerCollider;
-    private Collider enemyCollider;
+    protected Collider playerCollider;
+    protected Collider enemyCollider;
     private GameManager gameManager;
     
     private float damageCooldown = 0f; // Cooldown between damage ticks
 
     public int damage = 10; // Damage dealt to the player on collision
 
+    public Vector3 originalPosition;
+    
+
     protected virtual void Start()
     {
+        originalPosition = transform.position;
         gameManager = GameManager.Instance;
         if (gameManager == null)
         {

@@ -45,6 +45,8 @@ public class FaceTrackerReceiver : MonoBehaviour
     // Offset to apply when resetting position
     private Vector3 resetOffset;
 
+    public bool isCalibrated = false; // Add this line
+
     void Awake()
     {
         if (instance == null)
@@ -60,7 +62,6 @@ public class FaceTrackerReceiver : MonoBehaviour
 
     void Start()
     {
-        // Existing start code
         udpClient = new UdpClient(5005);
         remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
         minMaxValues.Reset(); // Initialize the min/max values on start
@@ -80,10 +81,11 @@ public class FaceTrackerReceiver : MonoBehaviour
             coordinates.y = -(receivedCoordinates.y - resetOffset.y);
             coordinates.z = receivedCoordinates.z - resetOffset.z;
 
-            // Update min/max values based on the received coordinates
-            UpdateMinMaxValues();
-        } else {
-            isActive = false;
+            // Update min/max values only during calibration
+            if (!isCalibrated)
+            {
+                UpdateMinMaxValues();
+            }
         }
 
         // Check for 'R' key press to reset position
@@ -106,6 +108,19 @@ public class FaceTrackerReceiver : MonoBehaviour
         // Update min/max for z
         if (coordinates.z < minMaxValues.minZ) minMaxValues.minZ = coordinates.z;
         if (coordinates.z > minMaxValues.maxZ) minMaxValues.maxZ = coordinates.z;
+    }
+
+    public void StartCalibration()
+    {
+        minMaxValues.Reset();
+        resetOffset = new Vector3(coordinates.x, coordinates.y, coordinates.z);
+        Debug.Log($"Calibration started. Offsets reset to {resetOffset}.");
+    }
+
+    public void StopCalibration()
+    {
+        isCalibrated = true;
+        Debug.Log("Calibration stopped. Min/Max values are now fixed.");
     }
 
     public void ResetPosition()

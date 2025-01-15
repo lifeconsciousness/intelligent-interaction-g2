@@ -17,13 +17,15 @@ public class SimpleEnemy : Enemy
                 Vector3 projectedPosition = transform.position - planeNormal * distanceToPlane;
 
                 moveDirection = (projectedPosition - transform.position).normalized;
+
+            } else {
+                hasReachedPlane = true;
             }
 
 
             transform.position += moveDirection * speed * Time.deltaTime;
             transform.forward = moveDirection;
 
-            CheckIfReachedPlane(planeNormal, planePoint);
         }
         else
         {
