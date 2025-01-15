@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         if (HealthText == null) {
             Debug.LogError("HealthText is not set in the GameManager!");
         }
-        HealthText.SetText("Health: " + PlayerHealth);
+        HealthText.SetText(PlayerHealth + "♥︎");
     }
 
     private void Update()
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Player has died!");
         }
 
-        HealthText.SetText("Health: " + PlayerHealth);
+        HealthText.SetText(PlayerHealth + "♥︎");
     }
 
     public void Heal(int amount)
@@ -61,6 +61,6 @@ public class GameManager : MonoBehaviour
         if (PlayerHealth > 100)
             PlayerHealth = 100;
 
-        HealthText.SetText("Health: " + PlayerHealth);
+        HealthText.SetText(PlayerHealth + "♥︎");
     }
 }
