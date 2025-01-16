@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     // UI elements
     public TMPro.TextMeshProUGUI HealthText;
+    public GameObject damageIndicator;
 
     // Damage cooldown
     public float damageCooldown = 1f;
@@ -46,15 +47,22 @@ public class GameManager : MonoBehaviour
 
         lastDamageTime = Time.time;
 
+        damageIndicator.SetActive(true);
+        Invoke(nameof(HideDamageIndicator), damageCooldown);
+
         PlayerHealth -= damage;
         if (PlayerHealth <= 0) {
             PlayerHealth = 0;
             // Handle player death
             SceneManager.LoadScene("Menu");
-            Debug.Log("Player has died!");
         }
 
         HealthText.SetText(PlayerHealth + "♥︎");
+    }
+
+    private void HideDamageIndicator()
+    {
+        damageIndicator.SetActive(false);
     }
 
     public void Heal(int amount)
