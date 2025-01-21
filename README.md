@@ -1,7 +1,7 @@
 
 # Run Socket Client and Eye Tracker
 
-Please se unity version 6000.0.33f1 for the unity project. Othwerwise, the project may not work.
+Please use unity version 6000.0.33f1 for the unity project. Othwerwise, the project may not work.
 
 ## Setup Instructions
 
