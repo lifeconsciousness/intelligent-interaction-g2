@@ -112,7 +112,8 @@ public class FaceTrackerReceiver : MonoBehaviour
 
     public void StartCalibration()
     {
-        minMaxValues.Reset();
+        ResetPosition();
+        isCalibrated = false;
         resetOffset = new Vector3(coordinates.x, coordinates.y, coordinates.z);
         Debug.Log($"Calibration started. Offsets reset to {resetOffset}.");
     }
