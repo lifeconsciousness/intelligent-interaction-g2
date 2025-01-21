@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4676194264558797930
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2840267589992424680}
+  - component: {fileID: 5327274008318416511}
+  m_Layer: 0
+  m_Name: Phase2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2840267589992424680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676194264558797930}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5327274008318416511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676194264558797930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19ef2e8df319b47aa2838950bab7170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnEvents:
+  - spawnTime: 0
+    enemyPrefab: {fileID: 1617048064070404406, guid: 969160c74758b0455a34f9d6c23be6bf, type: 3}
+    useCoordinates: 1
+    spawnLocation: {fileID: 0}
+    spawnCoordinates: {x: 0, y: 2.03, z: 200}
+    quantity: 999999999
+    useRandomPosition: 1
+    areaSize: {x: 24.37, y: 17.3, z: 6.29}
+    spawnInterval: 0.01
+    visualize: 1
+    disable: 0
+  - spawnTime: 0
+    enemyPrefab: {fileID: 3113979297617189026, guid: 5b2027fc799824c6fbfea47908c0ee38, type: 3}
+    useCoordinates: 1
+    spawnLocation: {fileID: 0}
+    spawnCoordinates: {x: 0, y: 2.03, z: 200}
+    quantity: 999999
+    useRandomPosition: 1
+    areaSize: {x: 24.37, y: 17.3, z: 6.29}
+    spawnInterval: 1
+    visualize: 1
+    disable: 0
+  - spawnTime: 40
+    enemyPrefab: {fileID: 7602419664779441095, guid: 75d9506eb855920d5beb333985bad7c7, type: 3}
+    useCoordinates: 1
+    spawnLocation: {fileID: 0}
+    spawnCoordinates: {x: 0, y: 0, z: 100}
+    quantity: 1
+    useRandomPosition: 0
+    areaSize: {x: 16.4, y: 8.97, z: 6.29}
+    spawnInterval: 2
+    visualize: 1
+    disable: 0
+  - spawnTime: 60
+    enemyPrefab: {fileID: 4768946591325916156, guid: 41e3c4daa989c034aa5619120b5c6a64, type: 3}
+    useCoordinates: 1
+    spawnLocation: {fileID: 0}
+    spawnCoordinates: {x: 0, y: 0, z: 0}
+    quantity: 999999
+    useRandomPosition: 0
+    areaSize: {x: 16.4, y: 8.97, z: 6.29}
+    spawnInterval: 2
+    visualize: 1
+    disable: 0
+  repeat: 0
+  limitedRepeat: 0
+  repeatDuration: 10
+  destoryOverride: {fileID: 0}
