@@ -42,6 +42,7 @@ public class Spawner : MonoBehaviour
                 return;
             } else if (limitedRepeat && gameTimer <= repeatDuration)
             {
+                repeatDuration -= gameTimer;
                 gameTimer = 0f;
                 nextEventIndex = 0;
                 return;
