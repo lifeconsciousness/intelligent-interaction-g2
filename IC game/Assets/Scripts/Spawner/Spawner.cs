@@ -24,7 +24,10 @@ public class Spawner : MonoBehaviour
 
         while (nextEventIndex < spawnEvents.Count && gameTimer >= spawnEvents[nextEventIndex].spawnTime)
         {
-            if (spawnEvents[nextEventIndex].disable) break;
+            if (spawnEvents[nextEventIndex].disable) {
+                nextEventIndex++;
+                break;
+            }
             isCoroutineRunning = true;
             StartCoroutine(SpawnEnemies(spawnEvents[nextEventIndex]));
             nextEventIndex++;
