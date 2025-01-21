@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuController : MonoBehaviour
 {
@@ -11,11 +12,12 @@ public class MenuController : MonoBehaviour
     public GameObject MainMenu;
     public GameObject Calibrationmenu;
 
-    private FaceTrackerReceiver faceTracker; // Add this line
+    private FaceTrackerReceiver faceTracker;
+    public Button BackButton;
 
     void Start()
     {
-        faceTracker = FaceTrackerReceiver.Instance; // Add this block
+        faceTracker = FaceTrackerReceiver.Instance;
         if (faceTracker == null)
         {
             Debug.LogError("FaceTrackerReceiver instance not found.");
@@ -44,6 +46,9 @@ public class MenuController : MonoBehaviour
         // Initially we want to show the main menu and hide the calibration menu
         MainMenu.SetActive(true);
         Calibrationmenu.SetActive(false);
+        BackButton.gameObject.SetActive(false);
+
+        BackButton.onClick.AddListener(OnCalibrationDone);
     }
 
     void Update()
@@ -66,7 +71,8 @@ public class MenuController : MonoBehaviour
                         Debug.Log("calibrateText was clicked");
                         MainMenu.SetActive(false);
                         Calibrationmenu.SetActive(true);
-                        faceTracker.StartCalibration(); // Start calibration
+                        BackButton.gameObject.SetActive(true);
+                        faceTracker.StartCalibration();
                         break;
                 }
             }
@@ -75,17 +81,16 @@ public class MenuController : MonoBehaviour
         // If escape is hit, go back to the main menu
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            MainMenu.SetActive(true);
-            Calibrationmenu.SetActive(false);
-            faceTracker.StopCalibration(); // Stop calibration
+            OnCalibrationDone();
         }
     }
 
-    // Call this method when the user clicks the 'Done' button in the calibration menu
+    // This method is called when the user is done in the calibration menu
     public void OnCalibrationDone()
     {
         MainMenu.SetActive(true);
         Calibrationmenu.SetActive(false);
-        faceTracker.StopCalibration(); // Stop calibration
+        faceTracker.StopCalibration();
+        BackButton.gameObject.SetActive(false);
     }
 }
