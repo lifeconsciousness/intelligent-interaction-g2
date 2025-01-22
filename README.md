@@ -125,12 +125,12 @@ Click on the project "IC game" to open it. On the bottom window you should see f
 
 Has interactive scene start button and calibration tool button
 
-![image](https://ibb.co/FYMdcFf)
+![image](https://i.ibb.co/GMLrGq1/Screenshot-2025-01-22-at-23-26-05.png)
 
 ## The game itself
 
 The objective is to dodge projectiles that fly into the player. After certain time point is reached the boss appears.
 
-![image](https://ibb.co/bHt23DJ)
+![image](https://i.ibb.co/4skYf3d/Screenshot-2025-01-22-at-23-26-20.png)
 
 
