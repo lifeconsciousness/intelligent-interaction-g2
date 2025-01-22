@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,7 +6,7 @@ public class MenuController : MonoBehaviour
 {
     public Transform StartText;
     public Transform calibrateText;
-    public SceneAsset gameScene;
+    public string gameScene;
 
     public GameObject MainMenu;
     public GameObject Calibrationmenu;
@@ -64,7 +63,7 @@ public class MenuController : MonoBehaviour
                     case Transform t when t == StartText:
                         Debug.Log("StartText was clicked");
                         // switch scene to game scene
-                        SceneManager.LoadScene(gameScene.name);
+                        SceneManager.LoadScene(gameScene);
                         break;
 
                     case Transform t when t == calibrateText:
