@@ -1,7 +1,7 @@
 
 # Run Socket Client and Eye Tracker
 
-Please use unity version 6000.0.33f1 for the unity project. Othwerwise, the project may not work.
+If you are opening the project in unity please use version 6000.0.33f1. Othwerwise, the project may not work.
 
 ## Setup Instructions
 
@@ -117,3 +117,20 @@ In the projects tab click on the "Add" button and click on the "Add project from
 #### 4. Start the game
 
 Click on the project "IC game" to open it. On the bottom window you should see folders go into the "Scenes" folder and double click on the "Menu" scene not the folder to open it. Then click on the play button on the top of screen to run the game.
+
+
+# The game
+
+## Main menu
+
+Has interactive scene start button and calibration tool button
+
+![image](https://ibb.co/FYMdcFf)
+
+## The game itself
+
+The objective is to dodge projectiles that fly into the player. After certain time point is reached the boss appears.
+
+![image](https://ibb.co/bHt23DJ)
+
+
