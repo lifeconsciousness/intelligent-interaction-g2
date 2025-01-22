@@ -135,4 +135,4 @@ The objective is to dodge projectiles that fly into the player. After certain ti
 
 ![image](https://i.ibb.co/wsbWSyJ/Screenshot-2025-01-22-at-23-41-40.png)
 
-
+![image](https://i.ibb.co/JRhB3V1/Screenshot-2025-01-22-at-23-46-58.png)
